@@ -1,0 +1,12 @@
+﻿
+<link href="~/Content/css/Personalizado.css" rel="stylesheet" />
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div id="hide-menu" class="btn-header pull-right">
+        <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Menú"><i class="fa fa-reorder"></i></a> </span>
+    </div>
+    <div id="logout" class="btn-header transparent pull-right ">
+        <span> <a href="@Url.Action("LogOff", "account")" title="Salir" class="butoon" data-action="userLogout" data-logout-msg="Está seguro que desea salir del sistema"><i class="fa fa-sign-out"></i></a> </span>
+    </div>
+}

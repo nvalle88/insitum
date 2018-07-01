@@ -1,0 +1,112 @@
+﻿@model insitum.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Registrarse";
+}
+
+
+<div id="content" class="container">
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+            <div class="center-block no-padding">
+                <div class="well no-padding">
+                    <form action="@Url.Action("Register", "account")" method="POST" id="login-form" class="smart-form client-form">
+                        <header>
+                            <p class="text-center">  <i class="fa fa-user"></i> Registrar nuevo usuario</p>
+                        </header>
+
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationBootstrap()
+                        <fieldset>
+                            <section>
+                                <label class="label">@Html.DisplayNameFor(model => model.Email)</label>
+                                <label class="input">
+                                    <i class="icon-append fa fa-user"></i>
+                                    <input type="email" name="Email">
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Por favor entre su usuario</b>
+                                </label>
+                            </section>
+
+                            <section>
+                                <label class="label">@Html.DisplayNameFor(model => model.Password)</label>
+                                <label class="input">
+                                    <i class="icon-append fa fa-lock"></i>
+                                    <input type="password" name="Password">
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i>Por favor entre su contraseña</b>
+                                </label>
+                            </section>
+
+                            <section>
+                                <label class="label">@Html.DisplayNameFor(model => model.ConfirmPassword)</label>
+                                <label class="input">
+                                    <i class="icon-append fa fa-lock"></i>
+                                    <input type="password" name="ConfirmPassword">
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i>Por favor entre su contraseña</b>
+                                </label>
+                            </section>
+
+                        </fieldset>
+                        <footer>
+
+                            <button type="submit" class="btn btn-primary">
+                                Aceptar
+                            </button>
+                            @Html.ActionLink("Cancelar", "Login", "Account", new { @class = "btn btn-default" })
+
+                        </footer>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section pagespecific{
+    <script type="text/javascript">
+        $(function () {
+            // Validation
+            $("#login-form").validate({
+                // Rules for form validation
+                rules: {
+                    Email: {
+                        required: true,
+                        email: true
+                    },
+                    Password: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 20
+                    },
+
+                     ConfirmPassword: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 20
+                    }
+                },
+
+                // Messages for form validation
+                messages: {
+                    Email: {
+                        required: 'Por favor entre su correo',
+                        email: 'Entre un correo válido'
+                    },
+
+                    Password: {
+                        required: 'Por favor entre su contraseña'
+                    },
+
+                     ConfirmPassword: {
+                        required: 'Por favor entre su contraseña'
+                    }
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+        });
+    </script>
+}
+

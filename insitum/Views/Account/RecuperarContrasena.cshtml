@@ -1,0 +1,90 @@
+﻿@model insitum.ObjectModel.RecuperarContrasenaRequest
+@{
+    ViewBag.Title = "Registrarse";
+}
+
+
+<div id="content" class="container">
+
+
+    <div class="row">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-8">
+                <div class="alert alert-block alert-info">
+                    <a class="close" data-dismiss="alert" href="#">×</a>
+                    <h4 class="alert-heading"><i class="fa fa-check-square-o"></i> Informaci&oacute;n</h4>
+                    <p>
+                        *Ingrese el <b>correo electrónico</b> con el que está registrado !!!
+                    </p>
+                    <p>
+                        *Se le enviará al correo electrónico con un <b>código</b> de 4 dígitos!!!
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row ">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-2">&nbsp;</div>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                <div class="center-block no-padding">
+                    <div class="well no-padding">
+                        <form action="@Url.Action("RecuperarContrasena", "account")" method="POST" id="login" class="smart-form client-form">
+                            <header>
+                                <img src="~/Imagenes/Logo_1.png" />
+                            </header>
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationBootstrap()
+                            <fieldset>
+                                <section>
+                                    <label class="label">@Html.DisplayNameFor(model => model.Email)</label>
+                                    <label class="input">
+                                        <i class="icon-append fa fa-user"></i>
+                                        <input type="email" name="Email">
+                                        <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Por favor entre su correo electrónico</b>
+                                    </label>
+                                </section>
+                            </fieldset>
+                            <footer>
+
+                                <button type="submit" class="btn btn-primary">
+                                    Aceptar
+                                </button>
+                                @Html.ActionLink("Cancelar", "Login", "Account", new { @class = "btn btn-default" })
+
+                            </footer>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+        @section pagespecific{
+            <script type="text/javascript">
+                $(function () {
+                    // Validation
+                    $("#login").validate({
+                        // Rules for form validation
+                        rules: {
+                            Email: {
+                                required: true,
+                                email: true
+                            },
+                        },
+                        // Messages for form validation
+                        messages: {
+                            Email: {
+                                required: 'Por favor entre su correo',
+                                email: 'Entre un correo válido'
+                            },
+                        },
+
+                        // Do not change code below
+                        errorPlacement: function (error, element) {
+                            error.insertAfter(element.parent());
+                        }
+                    });
+                });
+            </script>
+        }
