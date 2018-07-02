@@ -7,13 +7,13 @@ namespace insitum.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class segunda : IMigrationMetadata
+    public sealed partial class quitandoCamposObligatorios : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(segunda));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(quitandoCamposObligatorios));
         
         string IMigrationMetadata.Id
         {
-            get { return "201807012125052_segunda"; }
+            get { return "201807020220094_quitandoCamposObligatorios"; }
         }
         
         string IMigrationMetadata.Source
