@@ -1,4 +1,8 @@
-﻿using System;
+﻿using insitum.Models;
+using insitum.Utiles;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,6 +22,72 @@ namespace insitum
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+
+            CorreoUtil.SmtpServer = System.Configuration.ConfigurationManager.AppSettings["SmtpServer"];
+            CorreoUtil.Port = System.Configuration.ConfigurationManager.AppSettings["SmtpPort"];
+            var Ssl = true;
+            if (System.Configuration.ConfigurationManager.AppSettings["EnableSsl"] == "True")
+            {
+                Ssl = true;
+            }
+            else
+            {
+                Ssl = false;
+            }
+
+            CorreoUtil.EnableSsl = Ssl;
+            CorreoUtil.UserName = System.Configuration.ConfigurationManager.AppSettings["Usuario"];
+            CorreoUtil.Password = System.Configuration.ConfigurationManager.AppSettings["Contrasena"];
+
+
+            UsuarioEstado.Activo = Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["AdministradorActivo"]);
+            UsuarioEstado.Inactivo = Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["AdministradorInactivo"]);
+
+            RolUsuario.Administrador = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["RolAdministrador"]);
+            RolUsuario.Trabajador = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["RolUsuario"]);
+            RolUsuario.Cliente = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["RolCliente"]);
+
+            Mensaje.UsuarioActivo = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["UsuarioActivo"]);
+            Mensaje.UsuarioInactivo = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["UsuarioInactivo"]);
+            Mensaje.ExisteCorreo = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["ExisteCorreo"]);
+            Mensaje.UsuarioConfirmado = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["UsuarioConfirmado"]);
+            Mensaje.UsuarioSinConfirmar = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["UsuarioSinConfirmar"]);
+            Mensaje.CreacionCuentaTrabajador = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["CreacionCuentaTrabajador"]);
+            Mensaje.ContrasenaTemporal = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["ContrasenaTemporal"]);
+            Mensaje.CuentaActivada = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["CuentaActivada"]);
+            Mensaje.UsuarioContrasenaIncorrecto = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["UsuarioContrasenaIncorrecto"]);
+            Mensaje.InformacionActivarCuenta = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["InformacionActivarCuenta"]);
+
+            CuotasCodigos.CuotaInferiorCodigo = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["CuotaInferiorCodigo"]);
+            CuotasCodigos.CuotaSuperiorCodigo = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["CuotaSuperiorCodigo"]);
+
+            ApplicationDbContext db = new ApplicationDbContext();
+            CreateRoles(db);
+           
+
+           
+        }
+
+
+        private void CreateRoles(ApplicationDbContext db)
+        {
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+
+            if (!roleManager.RoleExists(RolUsuario.Administrador))
+            {
+                roleManager.Create(new IdentityRole(RolUsuario.Administrador));
+            }
+
+            if (!roleManager.RoleExists(RolUsuario.Trabajador))
+            {
+                roleManager.Create(new IdentityRole(RolUsuario.Trabajador));
+            }
+
+            if (!roleManager.RoleExists(RolUsuario.Cliente))
+            {
+                roleManager.Create(new IdentityRole(RolUsuario.Cliente));
+            }
         }
     }
 }

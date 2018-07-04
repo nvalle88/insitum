@@ -69,6 +69,9 @@ namespace insitum.Models
         [Display(Name = "Teléfono del conyugue")]
         public string TelefonoConyuge { get; set; }
 
+        [Display(Name = "Teléfono del conyugue")]
+        public bool Estado { get; set; }
+
         public virtual List<Proceso> Procesos { get; set; }
 
         public int IdCiudad { get; set; }
@@ -96,6 +99,7 @@ namespace insitum.Models
         {
             return new ApplicationDbContext();
         }
+
         public System.Data.Entity.DbSet<Accion> Acciones { get; set; }
         public System.Data.Entity.DbSet<Ciudad> Ciudades { get; set; }
         public System.Data.Entity.DbSet<Proceso> Procesos { get; set; }

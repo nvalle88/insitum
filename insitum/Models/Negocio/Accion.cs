@@ -21,10 +21,6 @@ namespace insitum.Models.Negocio
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaInicio { get; set; }
 
-        [Display(Name = "Tiempo en días")]
-        [Range(1, int.MaxValue, ErrorMessage = "The field {0} can take values between {1} and {2}")]
-        public int TiempoDias { get; set; }
-
         [Display(Name = "Proceso")]
         public int IdProceso { get; set; }
         public virtual Proceso Proceso { get; set; }

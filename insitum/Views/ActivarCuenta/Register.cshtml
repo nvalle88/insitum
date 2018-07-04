@@ -1,0 +1,151 @@
+﻿@model insitum.ViewModel.ActivarCuentaViewModel
+@{
+    ViewBag.Title = "Registrarse";
+}
+
+
+<div id="content" class="container">
+    @if (ViewBag.Tipo == 1)
+    {
+        <div class="alert alert-block alert-success">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+            <p>
+                @ViewBag.Error
+            </p>
+        </div>
+    }
+
+    @if (ViewBag.Tipo == 2)
+    {
+        <div class="alert alert-block alert-danger">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+            <p>
+                @ViewBag.Error
+            </p>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+            <div class="center-block no-padding">
+                <div class="well no-padding">
+                    <form method="POST" id="login-form" class="smart-form client-form">
+                        <header>
+                            <p class="text-center">  <i class="fa fa-user"></i> Activar cuenta</p>
+                        </header>
+
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationBootstrap()
+                        <fieldset>
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            <section>
+                                <label class="label">@Html.DisplayNameFor(model => model.Email)</label>
+                                <label class="input">
+                                    <i class="icon-append fa fa-user"></i>
+                                    <input type="email" name="Email">
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Por favor entre su correo</b>
+                                </label>
+                            </section>
+
+                            <section>
+                                <label class="label">Contrase&ntilde;a temporal enviada a su correo</label>
+                                <label class="input">
+                                    <i class="icon-append fa fa-lock"></i>
+                                    <input type="password" name="PasswordTmp">
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i>Por favor entre su contraseña temporal enviada a su correo</b>
+                                </label>
+                            </section>
+
+                            <section>
+                                <label class="label">@Html.DisplayNameFor(model => model.Password)</label>
+                                <label class="input">
+                                    <i class="icon-append fa fa-lock"></i>
+                                    <input type="password" name="Password">
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i>Por favor entre su contraseña</b>
+                                </label>
+                            </section>
+
+                            <section>
+                                <label class="label">@Html.DisplayNameFor(model => model.ConfirmPassword)</label>
+                                <label class="input">
+                                    <i class="icon-append fa fa-lock"></i>
+                                    <input type="password" name="ConfirmPassword">
+                                    <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i>Por favor entre su contraseña</b>
+                                </label>
+                            </section>
+
+                        </fieldset>
+                        <footer>
+
+                            <button type="submit" class="btn btn-primary">
+                                Aceptar
+                            </button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section pagespecific{
+    <script type="text/javascript">
+        $(function () {
+            // Validation
+            $("#login-form").validate({
+                // Rules for form validation
+                rules: {
+                    Email: {
+                        required: true,
+                        email: true
+                    },
+                    Password: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 20
+                    },
+                    PasswordTmp: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 20
+                    },
+
+                     ConfirmPassword: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 20
+                    }
+                },
+
+                // Messages for form validation
+                messages: {
+                    Email: {
+                        required: 'Por favor entre su correo',
+                        email: 'Entre un correo válido'
+                    },
+
+                    Password: {
+                        required: 'Por favor entre su contraseña'
+                    },
+
+                    PasswordTmp: {
+                        required: 'Por favor entre la contraseña temporal que fue enviada a su correo'
+                    },
+
+                     ConfirmPassword: {
+                        required: 'Por favor entre su contraseña'
+                    }
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+        });
+    </script>
+}
+

@@ -216,6 +216,8 @@
     <Compile Include="Areas\Landing\Controllers\LandingController.cs" />
     <Compile Include="Areas\Landing\LandingAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ActivarCuentaController.cs" />
+    <Compile Include="Controllers\TrabajadorController.cs" />
     <Compile Include="Controllers\AppViewsController.cs" />
     <Compile Include="Controllers\CommerceController.cs" />
     <Compile Include="Controllers\ElementController.cs" />
@@ -241,6 +243,14 @@
     <Compile Include="Migrations\201807020220094_quitandoCamposObligatorios.Designer.cs">
       <DependentUpon>201807020220094_quitandoCamposObligatorios.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807032144068_QUITANDO_TIMEPODIAS_EN_ACCION.cs" />
+    <Compile Include="Migrations\201807032144068_QUITANDO_TIMEPODIAS_EN_ACCION.Designer.cs">
+      <DependentUpon>201807032144068_QUITANDO_TIMEPODIAS_EN_ACCION.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807032210402_CREANDO_CAMPO_ESTADO_USUARIO.cs" />
+    <Compile Include="Migrations\201807032210402_CREANDO_CAMPO_ESTADO_USUARIO.Designer.cs">
+      <DependentUpon>201807032210402_CREANDO_CAMPO_ESTADO_USUARIO.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -252,6 +262,14 @@
     <Compile Include="Models\Negocio\TipoAccion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utiles\CorreoUtil.cs" />
+    <Compile Include="Utiles\CuotasCodigos.cs" />
+    <Compile Include="Utiles\GenerarCodigo.cs" />
+    <Compile Include="Utiles\Template\infoMail.cs" />
+    <Compile Include="Utiles\UsuarioEstado.cs" />
+    <Compile Include="Utiles\Mensaje.cs" />
+    <Compile Include="Utiles\RolUsuario.cs" />
+    <Compile Include="ViewModel\ActivarCuentaViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Landing\Content\color\default.css" />
@@ -1154,6 +1172,8 @@
     <Content Include="Scripts\smartwidgets\jarvis.widget.min.js" />
     <Content Include="Scripts\speech\voicecommand.min.js" />
     <Content Include="Scripts\tabla\init.js" />
+    <Content Include="Utiles\Template\CuentaActivada.html" />
+    <Content Include="Utiles\Template\CreacionCuentaTrabajador.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1286,6 +1306,9 @@
     <Content Include="Scripts\plugin\ckeditor\README.md" />
     <Content Include="Scripts\plugin\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="Scripts\plugin\ckeditor\skins\moono\readme.md" />
+    <Content Include="Views\Trabajador\ListarTrabajador.cshtml" />
+    <Content Include="Views\Trabajador\NuevoTrabajador.cshtml" />
+    <Content Include="Views\ActivarCuenta\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1311,6 +1334,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807020220094_quitandoCamposObligatorios.resx">
       <DependentUpon>201807020220094_quitandoCamposObligatorios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807032144068_QUITANDO_TIMEPODIAS_EN_ACCION.resx">
+      <DependentUpon>201807032144068_QUITANDO_TIMEPODIAS_EN_ACCION.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807032210402_CREANDO_CAMPO_ESTADO_USUARIO.resx">
+      <DependentUpon>201807032210402_CREANDO_CAMPO_ESTADO_USUARIO.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
