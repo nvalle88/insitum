@@ -42,6 +42,109 @@ namespace insitum.Controllers
         }
 
 
+        public async Task<ActionResult> ReenviarCorreo(string id)
+        {
+            try
+            {
+                ApplicationDbContext db = new ApplicationDbContext();
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                var user = userManager.FindById(id);
+                var contrasenaTmp = GenerarCodigo.Generar(CuotasCodigos.CuotaInferiorCodigo, CuotasCodigos.CuotaSuperiorCodigo);
+                await userManager.ChangePasswordAsync(user.Id,user.PasswordHash,Convert.ToString(contrasenaTmp));
+                user.EmailConfirmed = false;
+                await userManager.UpdateAsync(user);
+                
+                string htmlData = InfoMail.CreacionCuentaTrabajador();
+                //Send email  
+                EnviarCorreo.Enviar(user.Email, Mensaje.CreacionCuentaTrabajador, "<b> " + Mensaje.ContrasenaTemporal + Convert.ToString(contrasenaTmp) + "</b><br/><br/><br/>" + htmlData);
+                db.Dispose();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return RedirectToAction("ListarTrabajador");
+        }
+
+        public async Task<ActionResult> Activar(string id)
+        {
+            try
+            {
+                ApplicationDbContext db = new ApplicationDbContext();
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                var user = userManager.FindById(id);
+                user.Estado = UsuarioEstado.Activo;
+                await userManager.UpdateAsync(user);
+                string htmlData = InfoMail.ActivacionCuentaAdministrador();
+                //Send email  
+                EnviarCorreo.Enviar(user.Email, Mensaje.ActivacionCuentaAdministrador, htmlData);
+                db.Dispose();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return RedirectToAction("ListarTrabajador");
+        }
+
+        public async Task<ActionResult> Desactivar(string id)
+        {
+            try
+            {
+                ApplicationDbContext db = new ApplicationDbContext();
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                var user = userManager.FindById(id);
+                user.Estado = UsuarioEstado.Inactivo;
+                await userManager.UpdateAsync(user);
+                string htmlData = InfoMail.DesactivacionCuentaAdministrador();
+                //Send email  
+                EnviarCorreo.Enviar(user.Email, Mensaje.DesactivacionCuentaAdministrador, htmlData);
+                db.Dispose();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return RedirectToAction("ListarTrabajador");
+        }
+
+
+        public async Task<ActionResult> Eliminar(string id)
+        {
+            try
+            {
+                ApplicationDbContext db = new ApplicationDbContext();
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+                var user = userManager.FindById(id);
+                user.Estado = UsuarioEstado.Inactivo;
+                var rol= user.Roles.FirstOrDefault();
+                var rolName= await roleManager.FindByIdAsync(rol.RoleId);
+                await userManager.RemoveFromRoleAsync(user.Id,rolName.Name);
+                await userManager.DeleteAsync(user);
+                string htmlData = InfoMail.CuentaEliminada();
+                //Send email  
+                EnviarCorreo.Enviar(user.Email, Mensaje.CuentaEliminada, htmlData);
+                db.Dispose();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return RedirectToAction("ListarTrabajador");
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -68,22 +171,9 @@ namespace insitum.Controllers
                 userManager.Create(applicationUser,Convert.ToString(contrasenaTmp));
                 userManager.AddToRole(applicationUser.Id, RolUsuario.Trabajador);
 
-                WebMail.SmtpServer = CorreoUtil.SmtpServer;
-                //gmail port to send emails  
-                WebMail.SmtpPort = Convert.ToInt32(CorreoUtil.Port);
-                WebMail.SmtpUseDefaultCredentials = true;
-                //sending emails with secure protocol  
-                WebMail.EnableSsl = true;
-                //EmailId used to send emails from application  
-                WebMail.UserName = CorreoUtil.UserName;
-                WebMail.Password = CorreoUtil.Password;
-
-                //Sender email address.  
-                WebMail.From = CorreoUtil.UserName;
-
                 string htmlData = InfoMail.CreacionCuentaTrabajador();
                 //Send email  
-                WebMail.Send(to: applicationUser.Email, subject: Mensaje.CreacionCuentaTrabajador, body: "<b> "+Mensaje.ContrasenaTemporal +Convert.ToString(contrasenaTmp) +"<br/>" + htmlData, isBodyHtml: true);
+                EnviarCorreo.Enviar(applicationUser.Email,Mensaje.CreacionCuentaTrabajador, "<b> " + Mensaje.ContrasenaTemporal + Convert.ToString(contrasenaTmp) + "</b><br/><br/><br/>" + htmlData);
                 db.Dispose();
                 
             }

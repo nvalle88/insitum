@@ -43,24 +43,8 @@ namespace insitum.Controllers
                 user.EmailConfirmed = true;
                 await userManager.UpdateAsync(user);
                 await userManager.ChangePasswordAsync(user.Id, user.PasswordHash, activarCuentaViewModel.Password);
-                
-
-                WebMail.SmtpServer = CorreoUtil.SmtpServer;
-                //gmail port to send emails  
-                WebMail.SmtpPort = Convert.ToInt32(CorreoUtil.Port);
-                WebMail.SmtpUseDefaultCredentials = true;
-                //sending emails with secure protocol  
-                WebMail.EnableSsl = true;
-                //EmailId used to send emails from application  
-                WebMail.UserName = CorreoUtil.UserName;
-                WebMail.Password = CorreoUtil.Password;
-
-                //Sender email address.  
-                WebMail.From = CorreoUtil.UserName;
-
                 string htmlData = InfoMail.CuentaActivada();
-                //Send email  
-                WebMail.Send(to: user.Email, subject: Mensaje.CuentaActivada, body:  htmlData, isBodyHtml: true);
+                EnviarCorreo.Enviar(user.Email,Mensaje.CuentaActivada,htmlData);
                 return RedirectToAction("Login", "Account");
             }
             ViewBag.Tipo = 2;

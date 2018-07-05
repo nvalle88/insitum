@@ -25,5 +25,29 @@ namespace insitum.Utiles.Template
             string readText = File.ReadAllText(path);
             return readText;
         }
+
+        public static string ActivacionCuentaAdministrador()
+        {
+            //  var direccion = Path.Combine(Environment.CurrentDirectory, "\\Utils\\Template\\InfoMail.html");
+            string path = System.Web.HttpContext.Current.Request.MapPath("~\\Utiles\\Template\\ActivacionCuentaAdministrador.html");
+            string readText = File.ReadAllText(path);
+            return readText;
+        }
+
+        public static string CuentaEliminada()
+        {
+            //  var direccion = Path.Combine(Environment.CurrentDirectory, "\\Utils\\Template\\InfoMail.html");
+            string path = System.Web.HttpContext.Current.Request.MapPath("~\\Utiles\\Template\\CuentaEliminada.html");
+            string readText = File.ReadAllText(path);
+            return readText;
+        }
+
+        public static string DesactivacionCuentaAdministrador()
+        {
+            //  var direccion = Path.Combine(Environment.CurrentDirectory, "\\Utils\\Template\\InfoMail.html");
+            string path = System.Web.HttpContext.Current.Request.MapPath("~\\Utiles\\Template\\DesactivacionCuentaAdministrador.html");
+            string readText = File.ReadAllText(path);
+            return readText;
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace insitum
             CorreoUtil.SmtpServer = System.Configuration.ConfigurationManager.AppSettings["SmtpServer"];
             CorreoUtil.Port = System.Configuration.ConfigurationManager.AppSettings["SmtpPort"];
             var Ssl = true;
-            if (System.Configuration.ConfigurationManager.AppSettings["EnableSsl"] == "True")
+            if (Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["EnableSsl"]) ==true )
             {
                 Ssl = true;
             }
@@ -36,7 +36,18 @@ namespace insitum
                 Ssl = false;
             }
 
+            var SmtpUseDefaultCredentials = true;
+            if (Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["SmtpUseDefaultCredentials"]) == true)
+            {
+                SmtpUseDefaultCredentials = true;
+            }
+            else
+            {
+                SmtpUseDefaultCredentials = false;
+            }
+
             CorreoUtil.EnableSsl = Ssl;
+            CorreoUtil.SmtpUseDefaultCredentials = SmtpUseDefaultCredentials;
             CorreoUtil.UserName = System.Configuration.ConfigurationManager.AppSettings["Usuario"];
             CorreoUtil.Password = System.Configuration.ConfigurationManager.AppSettings["Contrasena"];
 
@@ -58,6 +69,9 @@ namespace insitum
             Mensaje.CuentaActivada = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["CuentaActivada"]);
             Mensaje.UsuarioContrasenaIncorrecto = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["UsuarioContrasenaIncorrecto"]);
             Mensaje.InformacionActivarCuenta = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["InformacionActivarCuenta"]);
+            Mensaje.ActivacionCuentaAdministrador = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["ActivacionCuentaAdministrador"]);
+            Mensaje.DesactivacionCuentaAdministrador = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["DesactivacionCuentaAdministrador"]);
+            Mensaje.CuentaEliminada = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["CuentaEliminada"]);
 
             CuotasCodigos.CuotaInferiorCodigo = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["CuotaInferiorCodigo"]);
             CuotasCodigos.CuotaSuperiorCodigo = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["CuotaSuperiorCodigo"]);

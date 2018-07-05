@@ -60,40 +60,58 @@
                                         <th data-class="expand"><i class="fa fa-fw fa-phone text-muted hidden-md hidden-sm hidden-xs"></i> Tel&eacute;fono</th>
                                         <th data-hide="phone"><i class="icon-append fa fa-envelope-o"></i> Correo</th>
                                         <th>Estado</th>
-                                        <th>Cuenta</th>
+                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model)
                                     {
-                                    <tr>
+                                        <tr>
 
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Nombres)  @Html.DisplayFor(modelItem => item.Apellidos)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.PhoneNumber)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Email)
-                                        </td>
-                                        @if (item.Estado)
-                                        {
-                                            <td><span class="center-block padding-5 label label-info">@Mensaje.UsuarioActivo</span></td>
-                                        }
-                                        else
-                                        {
-                                            <td><span class="center-block padding-5 label label-danger">@Mensaje.UsuarioInactivo</span></td>
-                                        }
-                                        @if (item.EmailConfirmed)
-                                        {
-                                            <td><span class="center-block padding-5 label label-success">@Mensaje.UsuarioConfirmado</span></td>
-                                        }
-                                        else
-                                        {
-                                            <td><span class="center-block padding-5 label label-warning">@Mensaje.UsuarioSinConfirmar</span></td>
-                                        }
-                                    </tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Nombres)  @Html.DisplayFor(modelItem => item.Apellidos)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Email)
+                                            </td>
+                                            <td>
+                                                @if (item.Estado)
+                                                {
+                                                    <span class="center-block padding-5 label label-info">@Mensaje.UsuarioActivo</span>
+
+                                                }
+                                                else
+                                                {
+                                                    <span class="center-block padding-5 label label-danger">@Mensaje.UsuarioInactivo</span>
+                                                }
+                                                @if (item.EmailConfirmed)
+                                                {
+                                                    <span class="center-block padding-5 label label-success">@Mensaje.UsuarioConfirmado</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="center-block padding-5 label label-warning">@Mensaje.UsuarioSinConfirmar</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @Html.ActionLink(" ", "ReenviarCorreo", new { id = item.Id }, new { @class = " btn btn-default btn-sm glyphicon glyphicon-send", @style = "color:green" })
+                                                @if (item.Estado)
+                                                {
+                                                    @Html.ActionLink(" ", "Desactivar", new { id = item.Id }, new { @class = " btn btn-default btn-sm glyphicon glyphicon-hand-down", @style = "color:blue" })
+                                                }
+                                                else
+                                                {
+                                                    @Html.ActionLink(" ", "Activar", new { id = item.Id }, new { @class = " btn btn-default btn-sm glyphicon glyphicon-hand-up", @style = "color:blue" })/**/
+                                                 
+                                                }
+
+                                                @Html.ActionLink(" ", "Editar", new { id = item.Id }, new { @class = "editar btn btn-default btn-md glyphicon glyphicon-edit", @style = "color:blue" })
+                                                @Html.ActionLink(" ", "Eliminar", new { id = item.Id }, new { @class = "eliminar btn btn-default btn-md glyphicon glyphicon-trash", @style = "color:red", onclick = "return confirm('Desea eliminar el registro... ?');" })
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>
