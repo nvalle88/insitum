@@ -1,77 +1,74 @@
-﻿@using SmartAdminMvc
-@using insitum.Models
+﻿@using insitum.Models
 @model LoginViewModel
-  @{  ViewBag.PageId = "extr-page";
-    ViewBag.PageClass = "animated fadeInDown";
+@{
+    ViewBag.Title = "Iniciar sesión";
 }
 
 
-
 <div id="content" class="container">
-    <div class="row">
-        @{  Html.RenderPartial("_LoginText"); }
+    <div class="row ">
+       @{  Html.RenderPartial("_LoginText"); }
         <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4">
             <div class="well no-padding">
                 <form action="@Url.Action("login", "account")" method="POST" id="login-form" class="smart-form client-form">
                     <header>
-                        Autenticar
+                        Sign In
                     </header>
-                    @Html.HiddenFor(m => m.ReturnUrl)
                     @Html.AntiForgeryToken()
                     @Html.ValidationBootstrap()
                     <fieldset>
                         <section>
-                            <label class="label">Correo</label>
+                            <label class="label">E-mail</label>
                             <label class="input">
                                 <i class="icon-append fa fa-user"></i>
                                 <input type="email" name="email" value="demo@email.com">
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Por favor ingrese su correo</b>
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter email address/username</b>
                             </label>
                         </section>
 
                         <section>
-                            <label class="label">Contrase&ntilde;a</label>
+                            <label class="label">Password</label>
                             <label class="input">
                                 <i class="icon-append fa fa-lock"></i>
                                 <input type="password" name="password" value="demo">
-                                <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Por favor ingrese su contrase&ntilde;a</b>
+                                <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your password</b>
                             </label>
-
+                            <div class="note">
+                                <a href="@Url.Action("forgotpassword", "account")"><i class="fa fa-frown-o"></i> Forgot password?</a>
+                            </div>
                         </section>
 
                         <section>
                             <label class="checkbox">
                                 <input type="checkbox" name="rememberMe" value="true" checked="checked">
                                 <input type="hidden" name="rememberMe" value="false" />
-                                <i></i>Recordar
+                                <i></i>Stay signed in
                             </label>
                         </section>
-                        <div class="note">
-                            <a href="@Url.Action("forgotpassword", "account")"> Recuperar contrase&ntilde;a</a>
-                        </div>
                     </fieldset>
                     <footer>
                         <button type="submit" class="btn btn-primary">
-                            Autenticar
+                            Sign in
                         </button>
                     </footer>
                 </form>
             </div>
+
         </div>
     </div>
 </div>
-@section pagespecific {
+@section pagespecific{
     <script type="text/javascript">
         $(function () {
             // Validation
             $("#login-form").validate({
                 // Rules for form validation
                 rules: {
-                    email: {
+                    Email: {
                         required: true,
                         email: true
                     },
-                    password: {
+                    Password: {
                         required: true,
                         minlength: 3,
                         maxlength: 20
@@ -80,12 +77,12 @@
 
                 // Messages for form validation
                 messages: {
-                    email: {
-                        required: 'Please enter your email address',
-                        email: 'Please enter a VALID email address'
+                    Email: {
+                        required: 'Por favor entre su correo',
+                        email: 'Entre un correo válido'
                     },
-                    password: {
-                        required: 'Please enter your password'
+                    Password: {
+                        required: 'Por favor entre su contraseña'
                     }
                 },
 

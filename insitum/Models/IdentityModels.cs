@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using insitum.Models.Negocio;
+using insitum.Utiles;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -83,6 +84,10 @@ namespace insitum.Models
 
             // Tenga en cuenta que el valor de authenticationType debe coincidir con el definido en CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            ApplicationDbContext db = new ApplicationDbContext();
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            var usuario= userManager.FindByEmail(UserName);
+            userIdentity.AddClaim(new Claim(Constantes.IdUsuario,usuario.Id));
             // Agregar aquí notificaciones personalizadas de usuario
             return userIdentity;
         }

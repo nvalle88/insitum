@@ -10,6 +10,8 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using insitum.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
+using insitum.Utiles;
+using System.Data.Entity;
 
 namespace insitum.Controllers
 {
@@ -77,9 +79,31 @@ namespace insitum.Controllers
             // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
             // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
             switch (result)
             {
                 case SignInStatus.Success:
+                    ApplicationDbContext db = new ApplicationDbContext();
+                    var usuario=await UserManager.FindByEmailAsync(model.Email);
+                    var idRolTrabajador = db.Roles.Where(x => x.Name == RolUsuario.Trabajador).FirstOrDefault().Id;
+                    var idRolAdmninistrador = db.Roles.Where(x => x.Name == RolUsuario.Administrador).FirstOrDefault().Id;
+                    var idRolCliente = db.Roles.Where(x => x.Name == RolUsuario.Cliente).FirstOrDefault().Id;
+                    var usuarioAdministrador= usuario.Roles.Where(x => x.RoleId == idRolAdmninistrador).FirstOrDefault();
+                    var usuarioTrabajador= usuario.Roles.Where(x => x.RoleId == idRolTrabajador).FirstOrDefault();
+                    var usuarioCliente= usuario.Roles.Where(x => x.RoleId == idRolCliente).FirstOrDefault();
+
+                    if (usuarioCliente!=null)
+                    {
+                        return RedirectToAction("DetalleProceso","ClienteVista",new { id=usuario.Id});
+                    }
+                    if (usuarioAdministrador != null)
+                    {
+                        return RedirectToAction("Index","Home");
+                    }
+                    if (usuarioTrabajador != null)
+                    {
+                        return RedirectToAction("Index","Home");
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -135,56 +159,6 @@ namespace insitum.Controllers
             }
         }
 
-        //
-        // GET: /Account/Register
-        [AllowAnonymous]
-        public ActionResult Register()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Account/Register
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var user = new ApplicationUser { UserName = model.Email, Email = model.Email, IdCiudad = 1 };
-                    var result = await UserManager.CreateAsync(user, model.Password);
-                    
-
-                    if (result.Succeeded)
-                    {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        
-                        // Para obtener más información sobre cómo habilitar la confirmación de cuentas y el restablecimiento de contraseña, visite https://go.microsoft.com/fwlink/?LinkID=320771
-                        // Enviar correo electrónico con este vínculo
-                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                        // await UserManager.SendEmailAsync(user.Id, "Confirmar cuenta", "Para confirmar la cuenta, haga clic <a href=\"" + callbackUrl + "\">aquí</a>");
-
-                        return RedirectToAction("Index", "Home");
-                    }
-                    AddErrors(result);
-                }
-
-                // Si llegamos a este punto, es que se ha producido un error y volvemos a mostrar el formulario
-                return View(model);
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-        }
-
-        //
-        // GET: /Account/ConfirmEmail
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
@@ -398,12 +372,11 @@ namespace insitum.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //

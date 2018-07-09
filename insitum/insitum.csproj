@@ -217,6 +217,9 @@
     <Compile Include="Areas\Landing\LandingAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActivarCuentaController.cs" />
+    <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\ClienteVistaController.cs" />
+    <Compile Include="Controllers\ProcesoController.cs" />
     <Compile Include="Controllers\TrabajadorController.cs" />
     <Compile Include="Controllers\AppViewsController.cs" />
     <Compile Include="Controllers\CommerceController.cs" />
@@ -251,6 +254,18 @@
     <Compile Include="Migrations\201807032210402_CREANDO_CAMPO_ESTADO_USUARIO.Designer.cs">
       <DependentUpon>201807032210402_CREANDO_CAMPO_ESTADO_USUARIO.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807062304546_verificar_Cambiado.cs" />
+    <Compile Include="Migrations\201807062304546_verificar_Cambiado.Designer.cs">
+      <DependentUpon>201807062304546_verificar_Cambiado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807062320460_Quitando_Cambiado.cs" />
+    <Compile Include="Migrations\201807062320460_Quitando_Cambiado.Designer.cs">
+      <DependentUpon>201807062320460_Quitando_Cambiado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807082154578_aumentando_detalle_Acciones_procesos.cs" />
+    <Compile Include="Migrations\201807082154578_aumentando_detalle_Acciones_procesos.Designer.cs">
+      <DependentUpon>201807082154578_aumentando_detalle_Acciones_procesos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -260,8 +275,10 @@
     <Compile Include="Models\Negocio\Proceso.cs" />
     <Compile Include="Models\Negocio\Provincia.cs" />
     <Compile Include="Models\Negocio\TipoAccion.cs" />
+    <Compile Include="Models\ProcesoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utiles\Constantes.cs" />
     <Compile Include="Utiles\CorreoUtil.cs" />
     <Compile Include="Utiles\CuotasCodigos.cs" />
     <Compile Include="Utiles\EnviarCorreo.cs" />
@@ -271,6 +288,7 @@
     <Compile Include="Utiles\Mensaje.cs" />
     <Compile Include="Utiles\RolUsuario.cs" />
     <Compile Include="ViewModel\ActivarCuentaViewModel.cs" />
+    <Compile Include="ViewModel\AccionesViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Landing\Content\color\default.css" />
@@ -401,6 +419,7 @@
     <Content Include="Content\img\colorblind-friendly\pt3.png" />
     <Content Include="Content\img\cover.png" />
     <Content Include="Content\img\demo\64x64.png" />
+    <Content Include="Content\img\demo\abogado.jpg" />
     <Content Include="Content\img\demo\basic.png" />
     <Content Include="Content\img\demo\chat.png" />
     <Content Include="Content\img\demo\copyright.txt" />
@@ -1173,6 +1192,7 @@
     <Content Include="Scripts\smartwidgets\jarvis.widget.min.js" />
     <Content Include="Scripts\speech\voicecommand.min.js" />
     <Content Include="Scripts\tabla\init.js" />
+    <Content Include="Utiles\Template\CreacionCuentaCliente.html" />
     <Content Include="Utiles\Template\CuentaEliminada.html" />
     <Content Include="Utiles\Template\DesactivacionCuentaAdministrador.html" />
     <Content Include="Utiles\Template\CuentaActivada.html" />
@@ -1198,7 +1218,7 @@
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Login1.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
@@ -1218,7 +1238,7 @@
     <Content Include="Views\Account\Lock.cshtml" />
     <Content Include="Views\Account\RecuperarContrasena.cshtml" />
     <Content Include="Views\Account\_ErrorText.cshtml" />
-    <Content Include="Views\Account\_LoginText.cshtml" />
+    <Content Include="Views\Account\_LoginText1.cshtml" />
     <Content Include="Views\Account\_SocialMedia.cshtml" />
     <Content Include="Views\AppViews\Blog.cshtml" />
     <Content Include="Views\AppViews\Gallery.cshtml" />
@@ -1313,6 +1333,19 @@
     <Content Include="Views\Trabajador\ListarTrabajador.cshtml" />
     <Content Include="Views\Trabajador\NuevoTrabajador.cshtml" />
     <Content Include="Views\ActivarCuenta\Register.cshtml" />
+    <Content Include="Views\Cliente\ListarCliente.cshtml" />
+    <Content Include="Views\Cliente\NuevoCliente.cshtml" />
+    <Content Include="Views\Proceso\DetalleProceso.cshtml" />
+    <Content Include="Views\Proceso\DetalleAcciones.cshtml" />
+    <Content Include="Views\Proceso\BuscarCliente.cshtml" />
+    <Content Include="Views\Proceso\1.cshtml" />
+    <Content Include="Views\Proceso\ClienteNoEncontrado.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\_LoginText.cshtml" />
+    <Content Include="Views\ClienteVista\DetalleProceso.cshtml" />
+    <Content Include="Views\ClienteVista\DetalleAcciones.cshtml" />
+    <Content Include="Views\Shared\Error404.cshtml" />
+    <Content Include="Views\Shared\NoEsPosibleEliminar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1344,6 +1377,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807032210402_CREANDO_CAMPO_ESTADO_USUARIO.resx">
       <DependentUpon>201807032210402_CREANDO_CAMPO_ESTADO_USUARIO.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807062304546_verificar_Cambiado.resx">
+      <DependentUpon>201807062304546_verificar_Cambiado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807062320460_Quitando_Cambiado.resx">
+      <DependentUpon>201807062320460_Quitando_Cambiado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807082154578_aumentando_detalle_Acciones_procesos.resx">
+      <DependentUpon>201807082154578_aumentando_detalle_Acciones_procesos.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

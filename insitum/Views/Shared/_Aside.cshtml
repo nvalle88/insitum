@@ -1,37 +1,71 @@
 ﻿    <!-- Left panel : Navigation area -->
 <!-- Note: This width of the aside area can be adjusted through LESS variables -->
+@using insitum.Utiles
+@using System.Security.Claims
 <aside id="left-panel">
     @{ Html.RenderPartial("_CurrentUser"); }
     <nav>
+
+        @if (User.IsInRole(RolUsuario.Administrador))
+        {
             <ul>
                 <li class=" @Html.RouteIf("Index", "active")">
-                    <a href="#" title="Colsultar informes gerenciales y compromisos con los clientes"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">Consultas</span></a>
+                    <a href="#" title="Listar trabajadores"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">Consultas</span></a>
                     <ul>
                         <li class="@Html.RouteIf("Trabajador", "active")">
-                            <a href="@Url.Action("ListarTrabajador", "Trabajador")" title="Listar usuarios"><i class="fa fa-lg fa-fw fa-file-text-o"></i> <span class="menu-item-parent">Listar</span></a>
+                            <a href="@Url.Action("ListarTrabajador", "Trabajador")" title="Listar usuarios"><i class="fa fa-lg fa-fw fa-file-text-o"></i> <span class="menu-item-parent">Trabajadores</span></a>
                         </li>
-                        <li class="@Html.RouteIf("Compromisos", "active")">
-                            <a href="@Url.Action("Index", "Compromisos")" title="Compromisos"><i class="fa fa-lg fa-fw fa-list-ul"></i> <span class="menu-item-parent">Compromisos</span></a>
-                        </li>
-                        <li class=" @Html.RouteIf("", "active" )">
-                            <a href="#" title="Reportes"><i class="fa fa-lg fa-fw fa-file-text-o"></i> <span class="menu-item-parent">Reportes</span></a>
-                            <ul>
-                                <li class="@Html.RouteIf("ReporteClientes", "active")">
-                                    <a href="@Url.Action("ReporteClientes", "Reportes")" title="Reporte de clientes"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">Clientes</span></a>
-                                </li>
-                                <li class="@Html.RouteIf("ReporteCompromisos", "active")">
-                                    <a href="@Url.Action("ReporteCompromisos", "Reportes")" title="Reporte de compromisos"><i class="fa fa-lg fa-fw fa-list-ul"></i> <span class="menu-item-parent">Compromisos</span></a>
-                                </li>
-                                <li class="@Html.RouteIf("ReporteVendedores", "active")">
-                                    <a href="@Url.Action("ReporteVendedores", "Reportes")" title="Reporte de vendedores"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">Vendedores</span></a>
-                                </li>
-                            </ul>
-                        </li>
-
                     </ul>
                 </li>
             </ul>
-        
+
+        }
+        else
+        {
+            if (User.IsInRole(RolUsuario.Trabajador))
+            {
+                <ul>
+                    <li class=" @Html.RouteIf("Proceso", "active")">
+                        <a href="#" title="Listar trabajadores"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">Consultas</span></a>
+                        <ul>
+                            <li class="@Html.RouteIf("Proceso", "active")">
+                                <a href="@Url.Action("BuscarCliente", "Proceso")" title="Buscar cliente"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">Buscar cliente</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class=" @Html.RouteIf("Cliente", "active")">
+                        <a href="#" title="Listar trabajadores"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">Clientes</span></a>
+                        <ul>
+                            <li class="@Html.RouteIf("Cliente", "active")">
+                                <a href="@Url.Action("ListarCliente", "Cliente")" title="Buscar cliente"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">Listar</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+            }
+            else
+            {
+                if (User.IsInRole(RolUsuario.Cliente))
+                {
+                    <ul>
+                        <li class=" @Html.RouteIf("ClienteVista", "active")">
+                            <a href="#" title="Listar trabajadores"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">Consultas</span></a>
+                            <ul>
+
+                                <li class="@Html.RouteIf("ClienteVista", "active")">
+                                    <a href="@Url.Action("DetalleProceso", "ClienteVista")" title="Buscar cliente"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">Detalle proceso</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                }
+            }
+        }
+
+
     </nav>
     <span class="minifyme" data-action="minifyMenu">
         <i class="fa fa-arrow-circle-left hit"></i>

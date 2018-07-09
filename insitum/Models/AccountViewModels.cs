@@ -60,6 +60,8 @@ namespace insitum.Models
 
         [Display(Name = "¿Recordar cuenta?")]
         public bool RememberMe { get; set; }
+
+        public string ReturnUrl { get; set; }
     }
 
     public class RegisterViewModel

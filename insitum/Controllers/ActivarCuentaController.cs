@@ -42,7 +42,8 @@ namespace insitum.Controllers
             {
                 user.EmailConfirmed = true;
                 await userManager.UpdateAsync(user);
-                await userManager.ChangePasswordAsync(user.Id, user.PasswordHash, activarCuentaViewModel.Password);
+                await userManager.RemovePasswordAsync(user.Id);
+                await userManager.AddPasswordAsync(user.Id, activarCuentaViewModel.Password);
                 string htmlData = InfoMail.CuentaActivada();
                 EnviarCorreo.Enviar(user.Email,Mensaje.CuentaActivada,htmlData);
                 return RedirectToAction("Login", "Account");

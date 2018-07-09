@@ -14,6 +14,7 @@ namespace insitum.Utiles
         public static string UsuarioSinConfirmar { get; set; }
 
         public static string CreacionCuentaTrabajador { get; set; }
+        public static string CreacionCuentaCliente { get; set; }
         public static string CuentaActivada { get; set; }
         public static string ActivacionCuentaAdministrador { get; set; }
         public static string DesactivacionCuentaAdministrador { get; set; }

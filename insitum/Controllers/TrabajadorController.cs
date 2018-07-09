@@ -50,7 +50,8 @@ namespace insitum.Controllers
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
                 var user = userManager.FindById(id);
                 var contrasenaTmp = GenerarCodigo.Generar(CuotasCodigos.CuotaInferiorCodigo, CuotasCodigos.CuotaSuperiorCodigo);
-                await userManager.ChangePasswordAsync(user.Id,user.PasswordHash,Convert.ToString(contrasenaTmp));
+                await userManager.RemovePasswordAsync(user.Id);
+                await userManager.AddPasswordAsync(user.Id,Convert.ToString(contrasenaTmp));
                 user.EmailConfirmed = false;
                 await userManager.UpdateAsync(user);
                 

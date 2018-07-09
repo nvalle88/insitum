@@ -1,18 +1,19 @@
-﻿using System;
+﻿using insitum.Models.Negocio;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace insitum.Models.Negocio
+namespace insitum.Models
 {
-    public class Proceso
+    public class ProcesoViewModel
     {
-        [Key]
         public int IdProceso { get; set; }
 
         [Required(ErrorMessage = "You must enter a {0}")]
-        [StringLength(8000, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters", MinimumLength = 3)]
+        [StringLength(1000, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters", MinimumLength = 3)]
         [Display(Name = "Detalle")]
         public string Detalle { get; set; }
 
@@ -29,8 +30,8 @@ namespace insitum.Models.Negocio
         [Display(Name = "Cliente")]
         [StringLength(128, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters", MinimumLength = 3)]
         public string Id { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
 
-        public virtual List<Accion> Acciones { get; set; }
+        [NotMapped]
+        public List<Proceso> ListaProcesos { get; set; }
     }
 }
