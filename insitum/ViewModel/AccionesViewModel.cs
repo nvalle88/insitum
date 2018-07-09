@@ -11,7 +11,7 @@ namespace insitum.ViewModel
     {
         public int IdProceso { get; set; }
 
-        [Required(ErrorMessage = "You must enter a {0}")]
+        [Required(ErrorMessage = "Debe ingresar {0}")]
         [StringLength(1000, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters", MinimumLength = 3)]
         [Display(Name = "Detalle")]
         public string Detalle { get; set; }

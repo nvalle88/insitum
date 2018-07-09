@@ -1,4 +1,4 @@
-﻿@model insitum.ViewModel.AccionesViewModel			
+﻿@model insitum.ViewModel.AccionesViewModel
 <div id="content">
     <a href="../DetalleProceso/@Model.Proceso.Id" class="btn btn-sm btn-default"><i class="fa fa-arrow-left text-muted"></i> Regresar</a>
     <p class="col col-lg-12"></p>
@@ -39,8 +39,29 @@
         </div>
 
     </div>
+    @if (ViewBag.Tipo != 0)
+    {
+        <div class="alert alert-block alert-info">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+            <p>
+                Acciones del proceso actual
+            </p>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-block alert-info">
+            <a class="close" data-dismiss="alert" href="#">×</a>
+            <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+            <p>
+                @ViewBag.mensaje;
+            </p>
+        </div>
+    }
+
     <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-        <i class="fa fa-plus">       Nueva acci&oacute;n</i> 
+        <i class="fa fa-plus">       Nueva acci&oacute;n</i>
     </button>
     <p class="col col-lg-12"></p>
     <!-- end row -->
@@ -94,56 +115,122 @@
 
     </div>
 
-    <!-- end row -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         &times;
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">Nueva Acci&oacute;n</h4>
+                    <h4 class="modal-title">
+                       Nueva acci&oacute;n
+                    </h4>
                 </div>
-                <div class="modal-body">
-                    <form method="post" action="../InsertarAccion" id="order-form" class="well col col-lg-12 smart-form padding-top-10" novalidate="novalidate">
+                <div class="modal-body no-padding">
+
+                    <form id="login-form" method="post"  action="../InsertarAccion"class="smart-form">
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(model => model.Proceso.IdProceso)
+                        <fieldset>
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-3">Fecha</label>
+                                    <div class="col col-9">
+                                        <label class="input">
+                                            <i class="icon-append fa fa-user"></i>
+                                            <input class="col col-lg-12 form-control datepicker hasDatepicker" type="date" data-dateformat="dd/mm/yy" name="FechaInicio" required>
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
 
-                        <p><b>Fecha</b></p>
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-3">Tipo de acci&oacute;n</label>
+                                    <div class="col col-9">
+                                        <label class="input">
+                                            @Html.DropDownList("IdTipoAccion", null, htmlAttributes: new { @class = "form-control" })
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
 
-                        <input class="col col-lg-12 form-control datepicker hasDatepicker" type="date" data-dateformat="dd/mm/yy" name="FechaInicio" required>
-                        <div class="margin-top-12">
-                            <p class="col col-lg-12">&nbsp;</p>
-                        </div>
-                        <p><b>Tipo de acci&oacute;n</b></p>
-                        @Html.DropDownList("IdTipoAccion", null, htmlAttributes: new { @class = "form-control" })
-                        <div class="margin-top-12">
-                            <p class="col col-lg-12">&nbsp;</p>
-                        </div>
-                        <p><b>Detalle</b></p>
-                        <textarea rows="8" class="form-control" name="Detalle" placeholder="Detalle del proceso" required></textarea>
-                        <div class="margin-top-10">
-                            <button type="submit" class="btn btn-sm fa fa-save btn-primary pull-right">
-                                &nbsp; Guardar
+                            <section>
+                                <div class="row">
+                                    <div class="col col-3">Detalle</div>
+                                    <div class="col col-9">
+                                        <textarea rows="8" class="form-control" name="Detalle" placeholder="Detalle del proceso" required></textarea>
+                                    </div>
+                                </div>
+                            </section>
+                            <section>
+                                <div class="row">
+                                    <div class="col col-3"></div>
+                                    <div class="col col-9">
+                                    </div>
+                                </div>
+                            </section>
+                        </fieldset>
+
+                        <footer>
+                            <button type="submit" class="btn btn-primary">
+                               <i class="fa fa-save"></i> Guardar
                             </button>
-                        </div>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Cancelar
+                            </button>
+
+                        </footer>
                     </form>
 
 
-                    <div class="row">
-                        <div class="col-md-12">
-                           
-                        </div>
-                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">
-                        Cancel
-                    </button>
-                   
-                </div>
+
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+   
 </div>
 <!-- END MAIN CONTENT -->
+@section pagespecific {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var $loginForm = $("#login-form").validate({
+                // Rules for form validation
+                rules: {
+                    Detalle: {
+                        required: true
+                        
+                    },
+                    FechaInicio: {
+                        required: true
+                       
+                    }
+                },
+
+                // Messages for form validation
+                messages: {
+                    Detalle: {
+                        required: 'Por favor ingrese el detalle'
+                  
+                    },
+                    FechaInicio: {
+                        required: 'Por favor ingrese la fecha'
+                    }
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+        })
+
+    </script>
+    
+
+
+
+}
+

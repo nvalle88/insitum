@@ -125,10 +125,13 @@ namespace insitum.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> InsertarAccion(AccionesViewModel accionView)
         {
-            var accionProceso = new Accion { Detalle = accionView.Detalle, FechaInicio = accionView.FechaInicio, IdProceso = accionView.Proceso.IdProceso, IdTipoAccion = accionView.IdTipoAccion};
             ApplicationDbContext db = new ApplicationDbContext();
+
+            var accionProceso = new Accion { Detalle = accionView.Detalle, FechaInicio = accionView.FechaInicio, IdProceso = accionView.Proceso.IdProceso, IdTipoAccion = accionView.IdTipoAccion};
+           
             db.Acciones.Add(accionProceso);
             await db.SaveChangesAsync();
+            db.Dispose();
 
             return RedirectToAction("DetalleAcciones",new { id=accionProceso.IdProceso});
         }
