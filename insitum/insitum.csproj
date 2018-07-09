@@ -289,6 +289,7 @@
     <Compile Include="Utiles\RolUsuario.cs" />
     <Compile Include="ViewModel\ActivarCuentaViewModel.cs" />
     <Compile Include="ViewModel\AccionesViewModel.cs" />
+    <Compile Include="ViewModel\RecuperarContrasenaRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Landing\Content\color\default.css" />
@@ -711,6 +712,7 @@
     <Content Include="Scripts\jquery-1.11.1.min.map" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bootstrap\bootstrap.min.js" />
     <Content Include="Scripts\demo.min.js" />
@@ -1193,6 +1195,7 @@
     <Content Include="Scripts\speech\voicecommand.min.js" />
     <Content Include="Scripts\tabla\init.js" />
     <Content Include="Utiles\Template\CreacionCuentaCliente.html" />
+    <Content Include="Utiles\Template\RecuperarContrasena.html" />
     <Content Include="Utiles\Template\CuentaEliminada.html" />
     <Content Include="Utiles\Template\DesactivacionCuentaAdministrador.html" />
     <Content Include="Utiles\Template\CuentaActivada.html" />
@@ -1218,7 +1221,6 @@
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login1.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
@@ -1346,6 +1348,7 @@
     <Content Include="Views\ClienteVista\DetalleAcciones.cshtml" />
     <Content Include="Views\Shared\Error404.cshtml" />
     <Content Include="Views\Shared\NoEsPosibleEliminar.cshtml" />
+    <Content Include="Views\Shared\RecuperarContrasenaInformacion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

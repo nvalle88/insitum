@@ -73,6 +73,7 @@ namespace insitum
             Mensaje.DesactivacionCuentaAdministrador = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["DesactivacionCuentaAdministrador"]);
             Mensaje.CuentaEliminada = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["CuentaEliminada"]);
             Mensaje.CreacionCuentaCliente = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["CreacionCuentaCliente"]);
+            Mensaje.RecuperarContrasena = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["RecuperarContrasena"]);
 
             CuotasCodigos.CuotaInferiorCodigo = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["CuotaInferiorCodigo"]);
             CuotasCodigos.CuotaSuperiorCodigo = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["CuotaSuperiorCodigo"]);

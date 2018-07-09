@@ -1,4 +1,4 @@
-﻿@model insitum.ObjectModel.RecuperarContrasenaRequest
+﻿@model insitum.ViewModel.RecuperarContrasenaRequest
 @{
     ViewBag.Title = "Registrarse";
 }
@@ -17,7 +17,7 @@
                         *Ingrese el <b>correo electrónico</b> con el que está registrado !!!
                     </p>
                     <p>
-                        *Se le enviará al correo electrónico con un <b>código</b> de 4 dígitos!!!
+                        *Se le enviará al correo electrónico con un <b>código</b> de 6 dígitos!!!
                     </p>
                 </div>
             </div>
@@ -30,7 +30,8 @@
                     <div class="well no-padding">
                         <form action="@Url.Action("RecuperarContrasena", "account")" method="POST" id="login" class="smart-form client-form">
                             <header>
-                                <img src="~/Imagenes/Logo_1.png" />
+                                <img src="~/Content/img/demo/abogado.jpg" style="width:340px;" />
+                                
                             </header>
                             @Html.AntiForgeryToken()
                             @Html.ValidationBootstrap()

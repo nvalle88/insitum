@@ -35,6 +35,15 @@ namespace insitum.Utiles.Template
             return readText;
         }
 
+
+        public static string RecuperarContrasena()
+        {
+            //  var direccion = Path.Combine(Environment.CurrentDirectory, "\\Utils\\Template\\InfoMail.html");
+            string path = System.Web.HttpContext.Current.Request.MapPath("~\\Utiles\\Template\\RecuperarContrasena.html");
+            string readText = File.ReadAllText(path);
+            return readText;
+        }
+
         public static string ActivacionCuentaAdministrador()
         {
             //  var direccion = Path.Combine(Environment.CurrentDirectory, "\\Utils\\Template\\InfoMail.html");

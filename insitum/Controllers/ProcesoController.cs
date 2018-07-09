@@ -68,6 +68,51 @@ namespace insitum.Controllers
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
+            if (!ModelState.IsValid)
+            {
+               
+                var user = UserManager.FindById(procesoView.Id);
+                ViewBag.Identificacion = $"{user.Identificacion}";
+                ViewBag.NombreApellido = $"{user.Nombres + "  " + user.Apellidos}";
+                ViewBag.PhoneNumber = $"{user.PhoneNumber}";
+                ViewBag.Email = $"{user.Email}";
+
+                ViewBag.IdentificacionConyuge = $"{user.IdentificacionConyuge}";
+                ViewBag.NombreApellidoConyugue = $"{user.NombresConyuge + "  " + user.ApellidosConyuge}";
+                ViewBag.CorreoConyuge = $"{user.CorreoConyuge}";
+                ViewBag.TelefonoConyuge = $"{user.TelefonoConyuge}";
+
+
+                var listaProcesos = db.Procesos.Where(x => x.Id == procesoView.Id).OrderByDescending(x => x.FechaInicio).ToList();
+                ViewBag.TotalProcesos = listaProcesos.Count();
+                var procesoViewModel = new ProcesoViewModel { Id = procesoView.Id, ListaProcesos = listaProcesos, Detalle = procesoView.Detalle, FechaInicio = procesoView.FechaInicio };
+                return View(procesoViewModel);
+            }
+
+
+            var existeNIP = db.Procesos.Where(x => x.NIP == procesoView.NIP).FirstOrDefault();
+
+
+            if (existeNIP!=null)
+            {
+                ModelState.AddModelError("NIP", "El NIP ya existe, por favor intente con otro NIP");
+                var user = UserManager.FindById(procesoView.Id);
+                ViewBag.Identificacion = $"{user.Identificacion}";
+                ViewBag.NombreApellido = $"{user.Nombres + "  " + user.Apellidos}";
+                ViewBag.PhoneNumber = $"{user.PhoneNumber}";
+                ViewBag.Email = $"{user.Email}";
+
+                ViewBag.IdentificacionConyuge = $"{user.IdentificacionConyuge}";
+                ViewBag.NombreApellidoConyugue = $"{user.NombresConyuge + "  " + user.ApellidosConyuge}";
+                ViewBag.CorreoConyuge = $"{user.CorreoConyuge}";
+                ViewBag.TelefonoConyuge = $"{user.TelefonoConyuge}";
+
+               
+                var listaProcesos = db.Procesos.Where(x => x.Id == procesoView.Id).OrderByDescending(x => x.FechaInicio).ToList();
+                ViewBag.TotalProcesos = listaProcesos.Count();
+                var procesoViewModel = new ProcesoViewModel { Id = procesoView.Id, ListaProcesos = listaProcesos,Detalle=procesoView.Detalle,FechaInicio=procesoView.FechaInicio };
+                return View(procesoViewModel);
+            }
             var proceso = new Proceso { Id = procesoView.Id, Detalle = procesoView.Detalle, FechaInicio = procesoView.FechaInicio, NIP = procesoView.NIP };
             db.Procesos.Add(proceso);
             await db.SaveChangesAsync();

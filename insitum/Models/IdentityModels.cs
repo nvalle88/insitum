@@ -16,22 +16,22 @@ namespace insitum.Models
     public class ApplicationUser : IdentityUser
     {
         //[Required(ErrorMessage = "You must enter a {0}")]
-        [StringLength(13, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters", MinimumLength = 5)]
+        [StringLength(13, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters")]
         [Display(Name = "Identificación")]
         public string Identificacion { get; set; }
         
         //[Required(ErrorMessage = "You must enter a {0}")]
-        [StringLength(100, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters", MinimumLength = 5)]
+        [StringLength(100, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters")]
         [Display(Name = "Nombres")]
         public string Nombres { get; set; }
 
         //[Required(ErrorMessage = "You must enter a {0}")]
-        [StringLength(100, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters", MinimumLength = 5)]
+        [StringLength(100, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters")]
         [Display(Name = "Apellidos")]
         public string Apellidos { get; set; }
 
         //[Required(ErrorMessage = "You must enter a {0}")]
-        [StringLength(500, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters", MinimumLength = 5)]
+        [StringLength(500, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters")]
         [Display(Name = "Dirección")]
         public string Direccion { get; set; }
 
@@ -41,22 +41,22 @@ namespace insitum.Models
         public string Correo { get; set; }
 
         //[Required(ErrorMessage = "You must enter a {0}")]
-        [StringLength(20, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters", MinimumLength = 5)]
+        [StringLength(20, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters")]
         [Display(Name = "Teléfono")]
         public string TelefonoContacto { get; set; }
 
         //[Required(ErrorMessage = "You must enter a {0}")]
-        [StringLength(13, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters", MinimumLength = 5)]
+        [StringLength(13, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters")]
         [Display(Name = "Identificación del conyugue")]
         public string IdentificacionConyuge { get; set; }
 
         //[Required(ErrorMessage = "You must enter a {0}")]
-        [StringLength(100, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters", MinimumLength = 5)]
+        [StringLength(100, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters")]
         [Display(Name = "Nombres del conyugue")]
         public string NombresConyuge { get; set; }
 
 //        [Required(ErrorMessage = "You must enter a {0}")]
-        [StringLength(100, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters", MinimumLength = 5)]
+        [StringLength(100, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters")]
         [Display(Name = "Apellidos del conyugue")]
         public string ApellidosConyuge { get; set; }
 
@@ -66,7 +66,7 @@ namespace insitum.Models
         public string CorreoConyuge { get; set; }
 
   //      [Required(ErrorMessage = "You must enter a {0}")]
-        [StringLength(20, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters", MinimumLength = 5)]
+        [StringLength(20, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters")]
         [Display(Name = "Teléfono del conyugue")]
         public string TelefonoConyuge { get; set; }
 
@@ -80,13 +80,12 @@ namespace insitum.Models
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
-
-
             // Tenga en cuenta que el valor de authenticationType debe coincidir con el definido en CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             ApplicationDbContext db = new ApplicationDbContext();
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             var usuario= userManager.FindByEmail(UserName);
+            
             userIdentity.AddClaim(new Claim(Constantes.IdUsuario,usuario.Id));
             // Agregar aquí notificaciones personalizadas de usuario
             return userIdentity;

@@ -12,6 +12,8 @@ using insitum.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using insitum.Utiles;
 using System.Data.Entity;
+using insitum.ViewModel;
+using insitum.Utiles.Template;
 
 namespace insitum.Controllers
 {
@@ -25,7 +27,7 @@ namespace insitum.Controllers
         {
         }
 
-        public AccountController(ApplicationDbContext a,ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationDbContext a, ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -37,9 +39,9 @@ namespace insitum.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -55,6 +57,33 @@ namespace insitum.Controllers
             }
         }
 
+
+        [AllowAnonymous]
+        public ActionResult RecuperarContrasena()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> RecuperarContrasena(RecuperarContrasenaRequest recuperarContrasenaRequest)
+        {
+            var usuario = await UserManager.FindByEmailAsync(recuperarContrasenaRequest.Email);
+            if (usuario != null)
+            {
+                var contrasenaTmp = GenerarCodigo.Generar(CuotasCodigos.CuotaInferiorCodigo, CuotasCodigos.CuotaSuperiorCodigo);
+                await UserManager.RemovePasswordAsync(usuario.Id);
+                await UserManager.AddPasswordAsync(usuario.Id, Convert.ToString(contrasenaTmp));
+
+                string htmlData = InfoMail.RecuperarContrasena();
+                //Send email  
+                EnviarCorreo.Enviar(usuario.Email, Mensaje.RecuperarContrasena, "<b> " + Mensaje.ContrasenaTemporal + Convert.ToString(contrasenaTmp) + "</b><br/><br/><br/>" + htmlData);
+
+                return View("RecuperarContrasenaInformacion");
+            }
+            ModelState.AddModelError("Email", "El correo electrónico no está registrado");
+            return View();
+        }
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -94,7 +123,7 @@ namespace insitum.Controllers
 
                     if (usuarioCliente!=null)
                     {
-                        return RedirectToAction("DetalleProceso","ClienteVista",new { id=usuario.Id});
+                        return RedirectToAction("DetalleProceso","ClienteVista");
                     }
                     if (usuarioAdministrador != null)
                     {
