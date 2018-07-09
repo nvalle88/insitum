@@ -42,14 +42,14 @@
                                             <label class="label">Identificaci&oacute;n </label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-user"></i>
-                                                <input type="text" name="Identificacion" value="@Model.Identificacion" placeholder="Ingrese el nombre ">
+                                                <input type="text" maxlength="13" name="Identificacion" value="@Model.Identificacion" placeholder="Ingrese el nombre ">
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Nombres</label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-user"></i>
-                                                <input type="text" name="Nombres" value="@Model.Nombres" placeholder="Ingrese el nombre ">
+                                                <input type="text" maxlength="100" name="Nombres" value="@Model.Nombres" placeholder="Ingrese el nombre ">
 
                                             </label>
                                         </section>
@@ -57,7 +57,7 @@
                                             <label class="label">Apellidos</label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-user"></i>
-                                                <input type="text" name="Apellidos" value="@Model.Apellidos" placeholder="Ingrese el apellido">
+                                                <input type="text" maxlength="100" name="Apellidos" value="@Model.Apellidos" placeholder="Ingrese el apellido">
                                             </label>
                                         </section>
                                        
@@ -75,7 +75,7 @@
                                             <label class="label">Correo</label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-envelope-o"></i>
-                                                <input type="email" name="Email" value="@Model.Email" placeholder="E-mail">
+                                                <input type="email" maxlength="256" name="Email" value="@Model.Email" placeholder="E-mail">
                                                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                                             </label>
                                         </section>
@@ -83,7 +83,7 @@
                                             <label class="label">Tel&eacute;fono</label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-phone"></i>
-                                                <input type="tel" name="PhoneNumber" value="@Model.PhoneNumber" placeholder="Phone" data-mask="(99) 9999-9999">
+                                                <input type="tel"  name="PhoneNumber" value="@Model.PhoneNumber" placeholder="Phone" data-mask="(99) 9999-9999">
                                             </label>
                                         </section>
                                     </div>
@@ -95,7 +95,7 @@
                                             <label class="label">Direcci&oacute;n</label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-home"></i>
-                                                <input type="text" name="Direccion" value="@Model.Direccion" placeholder="Ingrese la dirección">
+                                                <input type="text" maxlength="500" name="Direccion" value="@Model.Direccion" placeholder="Ingrese la dirección">
                                             </label>
                                         </section>
                                     </div>
@@ -111,7 +111,7 @@
                                             <label class="label">Nombre</label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-user"></i>
-                                                <input type="text" name="NombresConyuge" value="@Model.NombresConyuge" placeholder="Ingrese el nombre ">
+                                                <input type="text" maxlength="100" name="NombresConyuge" value="@Model.NombresConyuge" placeholder="Ingrese el nombre ">
 
                                             </label>
                                         </section>
@@ -119,7 +119,7 @@
                                             <label class="label">Apellido</label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-user"></i>
-                                                <input type="text" name="ApellidosConyuge" value="@Model.ApellidosConyuge" placeholder="Ingrese el apellido">
+                                                <input type="text" maxlength="100" name="ApellidosConyuge" value="@Model.ApellidosConyuge" placeholder="Ingrese el apellido">
                                             </label>
                                         </section>
                                     </div>
@@ -129,14 +129,14 @@
                                             <label class="label">Identificaci&oacute;n </label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-user"></i>
-                                                <input type="text" name="IdentificacionConyuge" value="@Model.IdentificacionConyuge" placeholder="Ingrese el nombre ">
+                                                <input type="text" maxlength="13" name="IdentificacionConyuge" value="@Model.IdentificacionConyuge" placeholder="Ingrese el nombre ">
                                             </label>
                                         </section>
                                         <section class="col col-4">
                                             <label class="label">Correo</label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-envelope-o"></i>
-                                                <input type="email" name="CorreoConyuge" value="@Model.CorreoConyuge" placeholder="E-mail">
+                                                <input type="email" maxlength="256" name="CorreoConyuge" value="@Model.CorreoConyuge" placeholder="E-mail">
                                                 @Html.ValidationMessageFor(model => model.CorreoConyuge, "", new { @class = "text-danger" })
                                             </label>
                                         </section>
@@ -144,7 +144,7 @@
                                             <label class="label">Tel&eacute;fono</label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-phone"></i>
-                                                <input type="tel" name="TelefonoConyuge" value="@Model.TelefonoConyuge" placeholder="Phone" data-mask="(99) 9999-9999">
+                                                <input type="tel"  name="TelefonoConyuge" value="@Model.TelefonoConyuge" placeholder="Phone" data-mask="(99) 9999-9999">
                                             </label>
                                         </section>
                                     </div>
