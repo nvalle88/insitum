@@ -1,0 +1,121 @@
+﻿@model insitum.Models.Negocio.Accion
+<div id="content">
+    <div >
+        <div class="">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                       Editar acci&oacute;n
+                    </h4>
+                </div>
+                <div class="modal-body no-padding">
+
+                    <form id="login-form" method="post"  class="smart-form">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.Proceso.IdProceso)
+                        @Html.HiddenFor(model => model.IdAccion)
+                        <fieldset>
+                            <section>
+                                <div class="row form-group">
+                                    <label class="label col col-3">Fecha</label>
+                                    <div class="col col-9">
+                                        <label class="input">
+                                            <input name="FechaInicio" placeholder="@Model.FechaInicio.ToShortDateString()" value="@Model.FechaInicio.ToShortDateString()" readonly="readonly" class="form-control datepicker" data-dateformat='dd/mm/yy' />
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <label class="label col col-3">Tipo de acci&oacute;n</label>
+                                    <div class="col col-9">
+                                        <label class="input">
+                                            @Html.DropDownList("IdTipoAccion", null, htmlAttributes: new { @class = "form-control" })
+                                        </label>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row">
+                                    <div class="col col-3">Detalle</div>
+                                    <div class="col col-9">
+                                        <textarea rows="8" class="form-control" name="Detalle" placeholder="Detalle del proceso" required>@Model.Detalle</textarea>
+                                    </div>
+                                </div>
+                            </section>
+                            <section>
+                                <div class="row">
+                                    <div class="col col-3"></div>
+                                    <div class="col col-9">
+                                    </div>
+                                </div>
+                            </section>
+                        </fieldset>
+
+                        <footer>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-save"></i> Guardar
+                            </button>
+                            <a href="../DetalleAcciones/@Model.Proceso.IdProceso" type="button" class="btn btn-default">
+                                Cancelar
+                            </a>
+
+                        </footer>
+                    </form>
+
+
+                </div>
+
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+   
+</div>
+<!-- END MAIN CONTENT -->
+@section pagespecific {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            var $loginForm = $("#login-form").validate({
+                // Rules for form validation
+                rules: {
+                    Detalle: {
+                        required: true
+                        
+                    },
+                    FechaInicio: {
+                        required: true
+                       
+                    }
+                },
+
+                // Messages for form validation
+                messages: {
+                    Detalle: {
+                        required: 'Por favor ingrese el detalle'
+                  
+                    },
+                    FechaInicio: {
+                        required: 'Por favor ingrese la fecha'
+                    }
+                },
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
+                }
+            });
+        })
+
+    </script>
+    
+
+
+
+}
+

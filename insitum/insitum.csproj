@@ -1349,6 +1349,8 @@
     <Content Include="Views\Shared\Error404.cshtml" />
     <Content Include="Views\Shared\NoEsPosibleEliminar.cshtml" />
     <Content Include="Views\Shared\RecuperarContrasenaInformacion.cshtml" />
+    <Content Include="Views\Proceso\EditarAccion.cshtml" />
+    <Content Include="Views\Proceso\EditarProceso.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -16,7 +16,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="text-center"><a href="profile.html"><strong> NIP:&nbsp; </strong>  @Model.Proceso.NIP</a></td>
+                            <td class="text-center"><a href="javascript:void(0);"><strong> NIP:&nbsp; </strong>  @Model.Proceso.NIP</a></td>
                             <td><b>Creado:&nbsp;&nbsp;</b><em>@Model.Proceso.FechaInicio.ToLongDateString()</em></td>
                         </tr>
                         <tr>
@@ -39,8 +39,7 @@
         </div>
 
     </div>
-    @if (ViewBag.Tipo != 0)
-    {
+
         <div class="alert alert-block alert-info">
             <a class="close" data-dismiss="alert" href="#">×</a>
             <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
@@ -48,17 +47,7 @@
                 Acciones del proceso actual
             </p>
         </div>
-    }
-    else
-    {
-        <div class="alert alert-block alert-info">
-            <a class="close" data-dismiss="alert" href="#">×</a>
-            <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
-            <p>
-                @ViewBag.mensaje;
-            </p>
-        </div>
-    }
+   
 
     <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
         <i class="fa fa-plus">       Nueva acci&oacute;n</i>
@@ -93,7 +82,7 @@
                                     </p>
                                     <ul class="list-inline">
                                         <li>
-                                            @Html.ActionLink(" ", "Editar", new { id = item.IdAccion }, new { @class = "editar btn btn-default btn-md glyphicon glyphicon-edit", @style = "color:blue" })
+                                            @Html.ActionLink(" ", "EditarAccion", new { id = item.IdAccion }, new { @class = "editar btn btn-default btn-md glyphicon glyphicon-edit", @style = "color:blue" })
                                         </li>
                                         <li>
                                             @Html.ActionLink(" ", "EliminarAccion", new { id = item.IdAccion }, new { @class = "eliminar btn btn-default btn-md glyphicon glyphicon-trash", @style = "color:red", onclick = "return confirm('Desea eliminar el registro... ?');" })

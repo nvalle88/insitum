@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace insitum.Controllers
 {
+    [Authorize(Roles = "Trabajador")]
     public class ProcesoController : Controller
     {
         private ApplicationUserManager _userManager;
@@ -62,6 +63,36 @@ namespace insitum.Controllers
             return View(procesoViewModel);
         }
 
+        public async Task<ActionResult> EditarProceso(int id)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var proceso = db.Procesos.Where(x => x.IdProceso == id).FirstOrDefault();
+            return View(proceso);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditarProceso(Proceso proceso)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var existeNIP = db.Procesos.Where(x => x.IdProceso != proceso.IdProceso && x.NIP==proceso.NIP ).FirstOrDefault();
+            if (existeNIP!=null)
+            {
+                ModelState.AddModelError("NIP", "El NIP ya está asignado otro proceso, por favor intente con otro NIP");
+                return View(proceso);
+            }
+
+            var procesoActualizar = db.Procesos.Where(x => x.IdProceso == proceso.IdProceso ).FirstOrDefault();
+
+            procesoActualizar.NIP = proceso.NIP;
+            procesoActualizar.Detalle = proceso.Detalle;
+            procesoActualizar.FechaInicio = proceso.FechaInicio;
+            db.Entry(procesoActualizar).State = System.Data.Entity.EntityState.Modified;
+            await db.SaveChangesAsync();
+            db.Dispose();
+            return RedirectToAction("DetalleProceso",new { id=procesoActualizar.Id});
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DetalleProceso(ProcesoViewModel procesoView)
@@ -95,7 +126,7 @@ namespace insitum.Controllers
 
             if (existeNIP!=null)
             {
-                ModelState.AddModelError("NIP", "El NIP ya existe, por favor intente con otro NIP");
+                ModelState.AddModelError("NIP", "El NIP ya está asignado otro proceso, por favor intente con otro NIP");
                 var user = UserManager.FindById(procesoView.Id);
                 ViewBag.Identificacion = $"{user.Identificacion}";
                 ViewBag.NombreApellido = $"{user.Nombres + "  " + user.Apellidos}";
@@ -119,6 +150,31 @@ namespace insitum.Controllers
 
            
             return RedirectToAction("DetalleProceso",new {id= procesoView.Id});
+        }
+
+
+        public async Task<ActionResult> EditarAccion(int id)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            ViewBag.IdTipoAccion = new SelectList(db.TipoAcciones.OrderBy(x => x.Nombre), "IdTipoAccion", "Nombre");
+            var accion= db.Acciones.Where(x=>x.IdAccion==id).FirstOrDefault();
+            return View(accion);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditarAccion(Accion accion)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var accionActualizar = db.Acciones.Where(x => x.IdAccion == accion.IdAccion).FirstOrDefault();
+            accionActualizar.IdProceso = accion.Proceso.IdProceso;
+            accionActualizar.IdTipoAccion = accion.IdTipoAccion;
+            accionActualizar.FechaInicio = accion.FechaInicio;
+            accionActualizar.Detalle = accion.Detalle;
+            db.Entry(accionActualizar).State=System.Data.Entity.EntityState.Modified;
+            await db.SaveChangesAsync();
+            db.Dispose();
+            return RedirectToAction("DetalleAcciones", new { id = accion.Proceso.IdProceso });
         }
 
         [HttpPost]

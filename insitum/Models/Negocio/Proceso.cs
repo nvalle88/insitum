@@ -18,7 +18,7 @@ namespace insitum.Models.Negocio
 
         [Display(Name = "Fecha de inicio")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = false)]
         public DateTime FechaInicio { get; set; }
 
         [Required(ErrorMessage = "You must enter a {0}")]
