@@ -32,7 +32,7 @@ namespace insitum.Controllers
             ApplicationDbContext db = new ApplicationDbContext();
             ViewBag.IdCiudad = new SelectList(db.Ciudades.OrderBy(x => x.Nombre), "IdCiudad", "Nombre");
         }
-        public async Task<ActionResult> NuevoCliente()
+        public ActionResult NuevoCliente()
         {
             CargarCiudades();
             ApplicationUser user = new ApplicationUser();
@@ -60,7 +60,7 @@ namespace insitum.Controllers
                 db.Dispose();
 
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 return View("NoEsPosibleEliminar");
             }
@@ -70,7 +70,7 @@ namespace insitum.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> NuevoCliente(ApplicationUser applicationUser)
+        public ActionResult NuevoCliente(ApplicationUser applicationUser)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace insitum.Controllers
 
             return RedirectToAction("DetalleProceso", "Proceso",new  {id=applicationUser.Id });
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 ModelState.AddModelError("","");
                 throw;

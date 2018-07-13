@@ -1194,6 +1194,8 @@
     <Content Include="Scripts\smartwidgets\jarvis.widget.min.js" />
     <Content Include="Scripts\speech\voicecommand.min.js" />
     <Content Include="Scripts\tabla\init.js" />
+    <Content Include="Utiles\Template\CreacionAccion.html" />
+    <Content Include="Utiles\Template\CreacionProceso.html" />
     <Content Include="Utiles\Template\CreacionCuentaCliente.html" />
     <Content Include="Utiles\Template\RecuperarContrasena.html" />
     <Content Include="Utiles\Template\CuentaEliminada.html" />

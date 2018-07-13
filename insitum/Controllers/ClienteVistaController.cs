@@ -41,7 +41,7 @@ namespace insitum.Controllers
             }
         }
         // GET: ClienteVista
-        public async Task<ActionResult> DetalleProceso()
+        public ActionResult DetalleProceso()
         {
             var userWithClaims = (ClaimsPrincipal)User;
             var idUsuario = userWithClaims.Claims.First(c => c.Type == Constantes.IdUsuario).Value;
@@ -67,7 +67,7 @@ namespace insitum.Controllers
             return View(procesoViewModel);
         }
 
-        public async Task<ActionResult> DetalleAcciones(int id)
+        public ActionResult DetalleAcciones(int id)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             var a = User;

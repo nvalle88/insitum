@@ -34,7 +34,7 @@ namespace insitum.Controllers
             ApplicationDbContext db = new ApplicationDbContext();
             ViewBag.IdCiudad = new SelectList(db.Ciudades.OrderBy(x => x.Nombre), "IdCiudad", "Nombre");
         }
-        public async Task<ActionResult> NuevoTrabajador()
+        public ActionResult NuevoTrabajador()
         {
             CargarCiudades();
             ApplicationUser user = new ApplicationUser();
@@ -61,7 +61,7 @@ namespace insitum.Controllers
                 db.Dispose();
 
             }
-            catch (Exception ex)
+            catch (Exception )
             {
 
                 throw;
@@ -85,7 +85,7 @@ namespace insitum.Controllers
                 db.Dispose();
 
             }
-            catch (Exception ex)
+            catch (Exception )
             {
 
                 throw;
@@ -109,7 +109,7 @@ namespace insitum.Controllers
                 db.Dispose();
 
             }
-            catch (Exception ex)
+            catch (Exception )
             {
 
                 throw;
@@ -138,7 +138,7 @@ namespace insitum.Controllers
                 db.Dispose();
 
             }
-            catch (Exception ex)
+            catch (Exception )
             {
 
                 throw;
@@ -149,7 +149,7 @@ namespace insitum.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> NuevoTrabajador(ApplicationUser applicationUser)
+        public ActionResult NuevoTrabajador(ApplicationUser applicationUser)
         {
             try
             {
@@ -178,7 +178,7 @@ namespace insitum.Controllers
                 db.Dispose();
                 
             }
-            catch (Exception ex)
+            catch (Exception )
             {
 
                 throw;

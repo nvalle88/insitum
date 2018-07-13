@@ -31,5 +31,10 @@ namespace insitum.Utiles
             WebMail.From = CorreoUtil.UserName;
             WebMail.Send(to: Email, subject: Subject, body: Body, isBodyHtml: isBodyHtml);
         }
+
+        internal static void Enviar(object email, string creacionCuentaCliente, object p)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

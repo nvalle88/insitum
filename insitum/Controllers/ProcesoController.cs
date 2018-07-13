@@ -1,5 +1,7 @@
 ﻿using insitum.Models;
 using insitum.Models.Negocio;
+using insitum.Utiles;
+using insitum.Utiles.Template;
 using insitum.ViewModel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -40,7 +42,7 @@ namespace insitum.Controllers
             }
         }
 
-        public async Task<ActionResult> DetalleProceso(string id)
+        public ActionResult DetalleProceso(string id)
         {
             var user= UserManager.FindById(id);
             ViewBag.Identificacion = $"{user.Identificacion}";
@@ -63,7 +65,7 @@ namespace insitum.Controllers
             return View(procesoViewModel);
         }
 
-        public async Task<ActionResult> EditarProceso(int id)
+        public ActionResult EditarProceso(int id)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             var proceso = db.Procesos.Where(x => x.IdProceso == id).FirstOrDefault();
@@ -146,14 +148,19 @@ namespace insitum.Controllers
             }
             var proceso = new Proceso { Id = procesoView.Id, Detalle = procesoView.Detalle, FechaInicio = procesoView.FechaInicio, NIP = procesoView.NIP };
             db.Procesos.Add(proceso);
+
             await db.SaveChangesAsync();
 
+                var enviar= db.Procesos.Where(x => x.Id == procesoView.Id).FirstOrDefault();
+                string htmlData = InfoMail.CreacionProceso();
+                //Send email  
+                EnviarCorreo.Enviar(enviar.ApplicationUser.Email,"Se ha creado un proceso",htmlData);
            
             return RedirectToAction("DetalleProceso",new {id= procesoView.Id});
         }
 
 
-        public async Task<ActionResult> EditarAccion(int id)
+        public ActionResult EditarAccion(int id)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             ViewBag.IdTipoAccion = new SelectList(db.TipoAcciones.OrderBy(x => x.Nombre), "IdTipoAccion", "Nombre");
@@ -187,6 +194,11 @@ namespace insitum.Controllers
            
             db.Acciones.Add(accionProceso);
             await db.SaveChangesAsync();
+            var enviar = db.Procesos.Where(x => x.IdProceso == accionView.Proceso.IdProceso).FirstOrDefault();
+            string htmlData = InfoMail.CreacionAccion();
+            //Send email  
+            EnviarCorreo.Enviar(enviar.ApplicationUser.Email, "Se ha creado una acción",htmlData);
+
             db.Dispose();
 
             return RedirectToAction("DetalleAcciones",new { id=accionProceso.IdProceso});
@@ -205,7 +217,7 @@ namespace insitum.Controllers
             return RedirectToAction("DetalleAcciones", new { id = idProceso });
         }
 
-        public async Task<ActionResult> BuscarCliente()
+        public ActionResult BuscarCliente()
         {
             var user = new ApplicationUser();
             return View(user);
@@ -213,7 +225,7 @@ namespace insitum.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> BuscarCliente(ApplicationUser applicationUser)
+        public ActionResult BuscarCliente(ApplicationUser applicationUser)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             var usuario = db.Users.Where(x => x.Identificacion == applicationUser.Identificacion).FirstOrDefault();
@@ -226,7 +238,7 @@ namespace insitum.Controllers
            
         }
 
-        public async Task<ActionResult> ClienteNoEncontrado()
+        public ActionResult ClienteNoEncontrado()
         {
             return View();
         }
@@ -245,7 +257,7 @@ namespace insitum.Controllers
             return RedirectToAction("DetalleProceso",new {id=procesoViewModel.Id });
         }
 
-        public async Task<ActionResult> DetalleAcciones(int id)
+        public  ActionResult DetalleAcciones(int id)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             var listaacciones = db.Acciones.Where(x => x.IdProceso == id).OrderByDescending(x=>x.FechaInicio).ToList();
