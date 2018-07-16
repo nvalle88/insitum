@@ -55,7 +55,11 @@ namespace insitum.Controllers
             ViewBag.CorreoConyuge = $"{user.CorreoConyuge}";
             ViewBag.TelefonoConyuge = $"{user.TelefonoConyuge}";
 
-            
+            ViewBag.CorreoNotificacion_1 = $"{user.CorreoNotificacion_1}";
+            ViewBag.CorreoNotificacion_2 = $"{user.CorreoNotificacion_2}";
+            ViewBag.CorreoNotificacion_3 = $"{user.CorreoNotificacion_3}";
+            ViewBag.CorreoNotificacion_4 = $"{user.CorreoNotificacion_4}";
+
 
             ApplicationDbContext db = new ApplicationDbContext();
             var listaProcesos = db.Procesos.Where(x=>x.Id==id).OrderByDescending(x=>x.FechaInicio).ToList();
