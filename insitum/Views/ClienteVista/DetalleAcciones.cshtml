@@ -11,7 +11,7 @@
                 <table class="table table-striped table-forum">
                     <thead>
                         <tr>
-                            <h2 class="row-seperator-header"><i class="glyphicon glyphicon-retweet"></i> Detalle del proceso </h2>
+                            <h2 class="row-seperator-header"><i class="glyphicon glyphicon-retweet"></i>&nbsp; Detalle del proceso </h2>
                         </tr>
                     </thead>
                     <tbody>
@@ -20,7 +20,7 @@
                             <td><b>Creado:&nbsp;&nbsp;</b><em>@Model.Proceso.FechaInicio.ToLongDateString()</em></td>
                         </tr>
                         <tr>
-                            <td class="text-center" style="width: 12%;">
+                            <td class="text-center" style="width: 20%;">
                                 <h1>
                                     <span class="semi-bold">@Model.Proceso.ApplicationUser.Nombres  @Model.Proceso.ApplicationUser.Apellidos</span>
                                     <br>
@@ -42,6 +42,14 @@
     <p class="col col-lg-12"></p>
     <!-- end row -->
     <!-- row -->
+    <div class="alert alert-block alert-info">
+        <a class="close" data-dismiss="alert" href="#">×</a>
+        <h4 class="alert-heading"><i class="fa fa-check-square-o"></i>Informaci&oacute;n!</h4>
+        <p>
+            Acciones del proceso actual
+        </p>
+    </div>
+
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="well well-sm">
@@ -62,7 +70,7 @@
                                 </div>
                                 <div class="smart-timeline-content">
                                     <p>
-                                        <a href="javascript:void(0);"><b>Fecha l&iacute;mite:</b>  @item.FechaInicio.AddDays(Convert.ToDouble(item.TipoAccion.TiempoDias)).ToLongDateString()  </a>
+                                        <a href="javascript:void(0);"><b><u> Detalle de la acci&oacute;n</u></b> </a>
                                     </p>
                                     <p>
                                         @item.Detalle
