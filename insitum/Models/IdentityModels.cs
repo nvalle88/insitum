@@ -15,32 +15,42 @@ namespace insitum.Models
     // Para agregar datos de perfil del usuario, agregue más propiedades a su clase ApplicationUser. Visite https://go.microsoft.com/fwlink/?LinkID=317594 para obtener más información.
     public class ApplicationUser : IdentityUser
     {
-        //[Required(ErrorMessage = "You must enter a {0}")]
         [StringLength(13, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters")]
         [Display(Name = "Identificación")]
         public string Identificacion { get; set; }
         
-        //[Required(ErrorMessage = "You must enter a {0}")]
         [StringLength(100, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters")]
         [Display(Name = "Nombres")]
         public string Nombres { get; set; }
 
-        //[Required(ErrorMessage = "You must enter a {0}")]
         [StringLength(100, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters")]
         [Display(Name = "Apellidos")]
         public string Apellidos { get; set; }
 
-        //[Required(ErrorMessage = "You must enter a {0}")]
         [StringLength(500, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters")]
         [Display(Name = "Dirección")]
         public string Direccion { get; set; }
 
         [DataType(DataType.EmailAddress)]
-        //[Index("EMailIndex", IsUnique = true,Order =1)]
         [Display(Name = "Correo")]
         public string Correo { get; set; }
 
-        //[Required(ErrorMessage = "You must enter a {0}")]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Correo notificación")]
+        public string CorreoNotificacion_1 { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Correo notificación")]
+        public string CorreoNotificacion_2 { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Correo notificación")]
+        public string CorreoNotificacion_3 { get; set; }
+
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Correo notificación")]
+        public string CorreoNotificacion_4 { get; set; }
+
         [StringLength(20, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters")]
         [Display(Name = "Teléfono")]
         public string TelefonoContacto { get; set; }

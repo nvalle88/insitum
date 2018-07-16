@@ -1,4 +1,7 @@
 ﻿@model insitum.ViewModel.AccionesViewModel
+
+@using insitum.Utiles
+    
 <div id="content">
     <a href="../DetalleProceso/@Model.Proceso.Id" class="btn btn-sm btn-default"><i class="fa fa-arrow-left text-muted"></i> Regresar</a>
     <p class="col col-lg-12"></p>
@@ -66,20 +69,61 @@
                         @foreach (var item in Model.ListaAcciones)
                         {
 
-                            <li>
+                        <li>
+                            @if (item.Estado == EstadoAcciones.EnProceso)
+                            {
                                 <div class="smart-timeline-icon">
                                     <i class="fa fa-file-text"></i>
                                 </div>
+
+                            }
+
+                            @if (item.Estado == EstadoAcciones.Finalizada)
+                            {
+                                <div class="smart-timeline-icon bg-color-greenDark">
+                                    <i class="fa fa-check"></i>
+                                </div>
+                            }
+
                                 <div class="smart-timeline-time">
                                     <small>   @item.FechaInicio.ToLongDateString()</small>
                                 </div>
+
+
                                 <div class="smart-timeline-content">
-                                    <p>
-                                        <a href="javascript:void(0);"><b> Tipo de acci&oacute;n:</b> @item.TipoAccion.Nombre  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Fecha l&iacute;mite:</b>  @item.FechaInicio.AddDays(Convert.ToDouble(item.TipoAccion.TiempoDias)).ToLongDateString()  </a>
-                                    </p>
-                                    <p>
-                                        @item.Detalle
-                                    </p>
+
+
+                                    @if (item.Estado == EstadoAcciones.EnProceso)
+                                    {
+                                        <p>
+                                            <a href="javascript:void(0);"><b> Tipo de acci&oacute;n:</b> @item.TipoAccion.Nombre  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Fecha l&iacute;mite:</b>  @item.FechaInicio.AddDays(Convert.ToDouble(item.TipoAccion.TiempoDias)).ToLongDateString()  </a>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Finalizar:&nbsp;</b> @Html.ActionLink(" ", "FinalizarAccion", new { id = item.IdAccion }, new { @class = "editar btn btn-default btn-md glyphicon glyphicon-ok", @style = "color:green" })
+                                        </p>
+                                        <p>
+                                            @item.Detalle
+                                        </p>
+
+                                    }
+
+                                    @if (item.Estado == EstadoAcciones.Finalizada)
+                                    {
+                                        <p>
+                                            <a href="javascript:void(0);"><b> Tipo de acci&oacute;n:</b> @item.TipoAccion.Nombre  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Fecha de finalizaci&oacute;n:</b>  @item.FechaFin.ToLongDateString()  </a>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Finalizar:&nbsp;</b> @Html.ActionLink(" ", "FinalizarAccion", new { id = item.IdAccion }, new { @class = "editar btn btn-default btn-md glyphicon glyphicon-ok", @style = "color:green" })
+                                        </p>
+                                        <p>
+                                            @item.Detalle
+                                        </p>
+                                        <legend>Detalle de la finalizaci&oacute;n</legend>
+
+                                        <p>
+                                            @item.DetalleFin
+                                        </p>
+
+                                    }
+
+
+
                                     <ul class="list-inline">
                                         <li>
                                             @Html.ActionLink(" ", "EditarAccion", new { id = item.IdAccion }, new { @class = "editar btn btn-default btn-md glyphicon glyphicon-edit", @style = "color:blue" })
@@ -87,6 +131,7 @@
                                         <li>
                                             @Html.ActionLink(" ", "EliminarAccion", new { id = item.IdAccion }, new { @class = "eliminar btn btn-default btn-md glyphicon glyphicon-trash", @style = "color:red", onclick = "return confirm('Desea eliminar el registro... ?');" })
                                         </li>
+
                                     </ul>
                                 </div>
                                 <hr />
@@ -147,7 +192,7 @@
                                 <div class="row">
                                     <div class="col col-3">Detalle</div>
                                     <div class="col col-9">
-                                        <textarea rows="8" class="form-control" name="Detalle" placeholder="Detalle del proceso" required></textarea>
+                                        <textarea rows="8" class="form-control" name="Detalle" placeholder="Detalle de la acci&oacute;n" required></textarea>
                                     </div>
                                 </div>
                             </section>

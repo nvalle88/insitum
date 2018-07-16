@@ -61,7 +61,7 @@ namespace insitum.Controllers
             var listaProcesos = db.Procesos.Where(x=>x.Id==id).OrderByDescending(x=>x.FechaInicio).ToList();
             ViewBag.TotalProcesos = listaProcesos.Count();
             var procesoViewModel = new ProcesoViewModel {Id=id, ListaProcesos = listaProcesos };
-            db.Dispose();
+            
             return View(procesoViewModel);
         }
 
@@ -160,6 +160,35 @@ namespace insitum.Controllers
         }
 
 
+
+        public ActionResult FinalizarAccion(int id)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var accion = db.Acciones.Where(x => x.IdAccion == id).FirstOrDefault();
+            accion.FechaFin = DateTime.Now;
+            if (accion.Estado==EstadoAcciones.EnProceso)
+            {
+                accion.DetalleFin = "";
+            }
+           
+            return View(accion);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> FinalizarAccion(Accion accion)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var accionFinalizar = db.Acciones.Where(x => x.IdAccion == accion.IdAccion).FirstOrDefault();
+            accionFinalizar.DetalleFin = accion.DetalleFin;
+            accionFinalizar.FechaFin = accion.FechaFin;
+            accionFinalizar.Estado = EstadoAcciones.Finalizada;
+            db.Entry(accionFinalizar).State = System.Data.Entity.EntityState.Modified;
+            await db.SaveChangesAsync();
+            db.Dispose();
+            return RedirectToAction("DetalleAcciones", new { id = accion.Proceso.IdProceso });
+        }
+
         public ActionResult EditarAccion(int id)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -188,21 +217,35 @@ namespace insitum.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> InsertarAccion(AccionesViewModel accionView)
         {
-            ApplicationDbContext db = new ApplicationDbContext();
 
-            var accionProceso = new Accion { Detalle = accionView.Detalle, FechaInicio = accionView.FechaInicio, IdProceso = accionView.Proceso.IdProceso, IdTipoAccion = accionView.IdTipoAccion};
-           
-            db.Acciones.Add(accionProceso);
-            await db.SaveChangesAsync();
-            var proceso = db.Procesos.Where(x => x.IdProceso == accionView.Proceso.IdProceso).FirstOrDefault();
-            var enviar = db.Users.Where(x => x.Id == proceso.Id).FirstOrDefault();
-            string htmlData = InfoMail.CreacionAccion();
-            //Send email  
-            EnviarCorreo.Enviar(enviar.Email, "Se ha creado una acción",htmlData);
+            try
+            {
+                if (ModelState.IsValid)
+                {
 
-            db.Dispose();
+                }
+                ApplicationDbContext db = new ApplicationDbContext();
 
-            return RedirectToAction("DetalleAcciones",new { id=accionProceso.IdProceso});
+                var accionProceso = new Accion { DetalleFin = "SIN FINALIZAR", FechaFin = DateTime.Now, Estado = EstadoAcciones.EnProceso, Detalle = accionView.Detalle, FechaInicio = accionView.FechaInicio, IdProceso = accionView.Proceso.IdProceso, IdTipoAccion = accionView.IdTipoAccion };
+
+                db.Acciones.Add(accionProceso);
+                await db.SaveChangesAsync();
+                var proceso = db.Procesos.Where(x => x.IdProceso == accionView.Proceso.IdProceso).FirstOrDefault();
+                var enviar = db.Users.Where(x => x.Id == proceso.Id).FirstOrDefault();
+                string htmlData = InfoMail.CreacionAccion();
+                //Send email  
+                EnviarCorreo.Enviar(enviar.Email, "Se ha creado una acción", htmlData);
+
+                db.Dispose();
+                return RedirectToAction("DetalleAcciones", new { id = accionProceso.IdProceso });
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            
         }
 
 

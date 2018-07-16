@@ -1,7 +1,7 @@
 ﻿@model insitum.Models.ProcesoViewModel
 <!-- MAIN CONTENT -->
 
-
+@using insitum.Utiles
 <div id="content">
 
     <div class="row">
@@ -188,25 +188,48 @@
                                                 <div class="row">
                                                     @foreach (var item in Model.ListaProcesos)
                                                     {
-                                                        <div class="col-xs-2 col-sm-2">
-                                                            <time datetime="@item.FechaInicio.ToShortDateString()" class="icon">
-                                                                <span>@item.FechaInicio.Year</span>
-                                                                <strong>@Convert.ToString(@item.FechaInicio.ToString("MMM"))</strong>
-                                                            </time>
-                                                        </div>
+                                                    <div class="col-xs-2 col-sm-2">
+                                                        <time datetime="@item.FechaInicio.ToShortDateString()" class="icon">
+                                                            <span>@item.FechaInicio.Year</span>
+                                                            <strong>@Convert.ToString(@item.FechaInicio.ToString("MMM"))</strong>
+                                                        </time>
+
+                                                        <br />
+                                                        <p><b><u> Acciones</u></b></p>
+                                                        
+                                                        <p><b> Total :</b><em class="badge pull-right bg-color-blue">
+                                                            @item.Acciones.Count()
+                                                        </em>
+                                                        </p>
+                                                        <p>
+                                                            <b> En proceso : </b><em class="badge pull-right bg-color-red">
+                                                                @item.Acciones.Where(x => x.Estado == EstadoAcciones.EnProceso).Count()
+                                                            </em>
+                                                        </p>
+                                                        <p><b> Finalizadas :</b><em class="badge pull-right bg-color-green">
+                                                            @item.Acciones.Where(x => x.Estado == EstadoAcciones.Finalizada).Count()
+                                                        </em>
+                                                        </p>
+                                                        
+
+                                                    </div>
                                                         <div class="col-xs-10 col-sm-10">
                                                             <h6 class="no-margin"><a href="../DetalleAcciones/@item.IdProceso">@item.NIP</a></h6>
+
                                                             <p class="JustifyFull">
                                                                 @item.Detalle
                                                             </p>
                                                         </div>
+
                                                         <div class="col-xs-2 col-sm-2">
+
                                                         </div>
                                                         <div class="col-xs-10 col-sm-10">
                                                             @Html.ActionLink(" ", "EditarProceso", new { id = item.IdProceso }, new { @class = "editar btn btn-default btn-md glyphicon glyphicon-edit", @style = "color:blue" })
                                                             @Html.ActionLink(" ", "EliminarProceso", new { id = item.IdProceso }, new { @class = "eliminar btn btn-default btn-md glyphicon glyphicon-trash", @style = "color:red", onclick = "return confirm('Desea eliminar el registro... ?');" })
                                                         </div>
                                                         <div class="col-sm-12">
+
                                                             <br>
                                                             <hr />
                                                         </div>
@@ -233,45 +256,45 @@
 
 @section pagespecific {
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    $(document).ready(function () {
+        $(document).ready(function () {
 
 
-        var $orderForm = $("#login-form").validate({
-            // Rules for form validation
-            rules: {
-                FechaInicio: {
-                    required: true
+            var $orderForm = $("#login-form").validate({
+                // Rules for form validation
+                rules: {
+                    FechaInicio: {
+                        required: true
+                    },
+                    NIP: {
+                        required: true
+                    },
+                    Detalle: {
+                        required: true
+                    },
                 },
-                NIP: {
-                    required: true
-                },
-                Detalle: {
-                    required: true
-                },
-            },
 
-            // Messages for form validation
-            messages: {
-                FechaInicio: {
-                    required: 'Por favor entre la Fecha de inicio'
+                // Messages for form validation
+                messages: {
+                    FechaInicio: {
+                        required: 'Por favor entre la Fecha de inicio'
+                    },
+                    NIP: {
+                        required: 'Por favor entre el NIP'
+                    },
+                    Detalle: {
+                        required: 'Por favor entre el Detalle'
+                    }
+
                 },
-                NIP: {
-                    required: 'Por favor entre el NIP'
-                },
-                Detalle: {
-                    required: 'Por favor entre el Detalle'
+
+                // Do not change code below
+                errorPlacement: function (error, element) {
+                    error.insertAfter(element.parent());
                 }
-               
-            },
-
-            // Do not change code below
-            errorPlacement: function (error, element) {
-                error.insertAfter(element.parent());
-            }
-        });
-    })
-</script>
+            });
+        })
+    </script>
 
 }

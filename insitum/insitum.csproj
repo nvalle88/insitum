@@ -266,6 +266,22 @@
     <Compile Include="Migrations\201807082154578_aumentando_detalle_Acciones_procesos.Designer.cs">
       <DependentUpon>201807082154578_aumentando_detalle_Acciones_procesos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807161633402_agregandoCorreosNotificaciones.cs" />
+    <Compile Include="Migrations\201807161633402_agregandoCorreosNotificaciones.Designer.cs">
+      <DependentUpon>201807161633402_agregandoCorreosNotificaciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807161715275_agregandofechaFin_DetalleFin_Estado_Acciones.cs" />
+    <Compile Include="Migrations\201807161715275_agregandofechaFin_DetalleFin_Estado_Acciones.Designer.cs">
+      <DependentUpon>201807161715275_agregandofechaFin_DetalleFin_Estado_Acciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807161718358_agregandofechaFin_DetalleFin_Estado_Acciones1.cs" />
+    <Compile Include="Migrations\201807161718358_agregandofechaFin_DetalleFin_Estado_Acciones1.Designer.cs">
+      <DependentUpon>201807161718358_agregandofechaFin_DetalleFin_Estado_Acciones1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807161724562_agregandofechaFin_DetalleFin_Estado_Acciones2.cs" />
+    <Compile Include="Migrations\201807161724562_agregandofechaFin_DetalleFin_Estado_Acciones2.Designer.cs">
+      <DependentUpon>201807161724562_agregandofechaFin_DetalleFin_Estado_Acciones2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -282,6 +298,7 @@
     <Compile Include="Utiles\CorreoUtil.cs" />
     <Compile Include="Utiles\CuotasCodigos.cs" />
     <Compile Include="Utiles\EnviarCorreo.cs" />
+    <Compile Include="Utiles\EstadoAcciones.cs" />
     <Compile Include="Utiles\GenerarCodigo.cs" />
     <Compile Include="Utiles\Template\infoMail.cs" />
     <Compile Include="Utiles\UsuarioEstado.cs" />
@@ -1353,6 +1370,7 @@
     <Content Include="Views\Shared\RecuperarContrasenaInformacion.cshtml" />
     <Content Include="Views\Proceso\EditarAccion.cshtml" />
     <Content Include="Views\Proceso\EditarProceso.cshtml" />
+    <Content Include="Views\Proceso\FinalizarAccion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1393,6 +1411,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807082154578_aumentando_detalle_Acciones_procesos.resx">
       <DependentUpon>201807082154578_aumentando_detalle_Acciones_procesos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807161633402_agregandoCorreosNotificaciones.resx">
+      <DependentUpon>201807161633402_agregandoCorreosNotificaciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807161715275_agregandofechaFin_DetalleFin_Estado_Acciones.resx">
+      <DependentUpon>201807161715275_agregandofechaFin_DetalleFin_Estado_Acciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807161718358_agregandofechaFin_DetalleFin_Estado_Acciones1.resx">
+      <DependentUpon>201807161718358_agregandofechaFin_DetalleFin_Estado_Acciones1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807161724562_agregandofechaFin_DetalleFin_Estado_Acciones2.resx">
+      <DependentUpon>201807161724562_agregandofechaFin_DetalleFin_Estado_Acciones2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -71,13 +71,15 @@ namespace insitum.Controllers
             var usuario = await UserManager.FindByEmailAsync(recuperarContrasenaRequest.Email);
             if (usuario != null)
             {
-                var contrasenaTmp = GenerarCodigo.Generar(CuotasCodigos.CuotaInferiorCodigo, CuotasCodigos.CuotaSuperiorCodigo);
+                //var contrasenaTmp = GenerarCodigo.Generar(CuotasCodigos.CuotaInferiorCodigo, CuotasCodigos.CuotaSuperiorCodigo);
                 await UserManager.RemovePasswordAsync(usuario.Id);
-                await UserManager.AddPasswordAsync(usuario.Id, Convert.ToString(contrasenaTmp));
+                await UserManager.AddPasswordAsync(usuario.Id, usuario.Identificacion);
+                usuario.EmailConfirmed = false;
+                await UserManager.UpdateAsync(usuario);
 
                 string htmlData = InfoMail.RecuperarContrasena();
                 //Send email  
-                EnviarCorreo.Enviar(usuario.Email, Mensaje.RecuperarContrasena, "<b> " + Mensaje.ContrasenaTemporal + Convert.ToString(contrasenaTmp) + "</b><br/><br/><br/>" + htmlData);
+                EnviarCorreo.Enviar(usuario.Email, Mensaje.RecuperarContrasena, "<b> " + Mensaje.ContrasenaTemporal+ "</b><br/><br/><br/>" + htmlData);
 
                 return View("RecuperarContrasenaInformacion");
             }
@@ -104,7 +106,16 @@ namespace insitum.Controllers
             {
                 return View(model);
             }
-
+            var usuario_1 = await UserManager.FindByEmailAsync(model.Email);
+            if (usuario_1!=null)
+            {
+                var a = await UserManager.CheckPasswordAsync(usuario_1, model.Password);
+                if (a==true && usuario_1.EmailConfirmed==false)
+                {
+                    return RedirectToAction("Register", "ActivarCuenta");
+                }
+            }
+           
             // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
             // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -113,6 +124,7 @@ namespace insitum.Controllers
             {
                 case SignInStatus.Success:
                     ApplicationDbContext db = new ApplicationDbContext();
+
                     var usuario=await UserManager.FindByEmailAsync(model.Email);
                     var idRolTrabajador = db.Roles.Where(x => x.Name == RolUsuario.Trabajador).FirstOrDefault().Id;
                     var idRolAdmninistrador = db.Roles.Where(x => x.Name == RolUsuario.Administrador).FirstOrDefault().Id;

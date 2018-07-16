@@ -13,7 +13,7 @@ namespace insitum.ViewModel
 
         [Required(ErrorMessage = "Debe ingresar {0}")]
         [StringLength(1000, ErrorMessage = "The field {0} can contain maximun {1} and minimum {2} characters", MinimumLength = 3)]
-        [Display(Name = "Detalle")]
+        [Display(Name = "Detalle de acción")]
         public string Detalle { get; set; }
 
         [Display(Name = "Fecha de inicio")]

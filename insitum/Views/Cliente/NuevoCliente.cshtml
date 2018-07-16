@@ -60,7 +60,7 @@
                                                 <input type="text" maxlength="100" name="Apellidos" value="@Model.Apellidos" placeholder="Ingrese el apellido">
                                             </label>
                                         </section>
-                                       
+
                                     </div>
                                     <div class="row">
                                         <section class="col col-4">
@@ -83,12 +83,12 @@
                                             <label class="label">Tel&eacute;fono</label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-phone"></i>
-                                                <input type="tel"  name="PhoneNumber" value="@Model.PhoneNumber" placeholder="Phone" data-mask="(99) 9999-9999">
+                                                <input type="tel" name="PhoneNumber" value="@Model.PhoneNumber" placeholder="Phone" data-mask="(99) 9999-9999">
                                             </label>
                                         </section>
                                     </div>
                                     <div class="row">
-                                        
+
                                     </div>
                                     <div class="row">
                                         <section class="col col-lg-12">
@@ -144,7 +144,51 @@
                                             <label class="label">Tel&eacute;fono</label>
                                             <label class="input">
                                                 <i class="icon-append fa fa-phone"></i>
-                                                <input type="tel"  name="TelefonoConyuge" value="@Model.TelefonoConyuge" placeholder="Phone" data-mask="(99) 9999-9999">
+                                                <input type="tel" name="TelefonoConyuge" value="@Model.TelefonoConyuge" placeholder="Phone" data-mask="(99) 9999-9999">
+                                            </label>
+                                        </section>
+                                    </div>
+                                    <div class="row">
+                                        <section class="col col-lg-12">
+                                            <legend><h3> Notificaciones por correo </h3></legend>
+                                        </section>
+
+                                    </div>
+                                    <div class="row">
+                                        
+                                        <section class="col col-6">
+                                            <label class="label">Correo notificaci&oacute;n</label>
+                                            <label class="input">
+                                                <i class="icon-append fa fa-envelope-o"></i>
+                                                <input type="email" maxlength="256" name="CorreoNotificacion_1" value="@Model.CorreoNotificacion_1" placeholder="E-mail">
+                                                @Html.ValidationMessageFor(model => model.CorreoNotificacion_1, "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+
+                                        <section class="col col-6">
+                                            <label class="label">Correo notificaci&oacute;n</label>
+                                            <label class="input">
+                                                <i class="icon-append fa fa-envelope-o"></i>
+                                                <input type="email" maxlength="256" name="CorreoNotificacion_1" value="@Model.CorreoNotificacion_1" placeholder="E-mail">
+                                                @Html.ValidationMessageFor(model => model.CorreoNotificacion_1, "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+
+                                        <section class="col col-6">
+                                            <label class="label">Correo notificaci&oacute;n</label>
+                                            <label class="input">
+                                                <i class="icon-append fa fa-envelope-o"></i>
+                                                <input type="email" maxlength="256" name="CorreoNotificacion_1" value="@Model.CorreoNotificacion_1" placeholder="E-mail">
+                                                @Html.ValidationMessageFor(model => model.CorreoNotificacion_1, "", new { @class = "text-danger" })
+                                            </label>
+                                        </section>
+
+                                        <section class="col col-6">
+                                            <label class="label">Correo notificaci&oacute;n</label>
+                                            <label class="input">
+                                                <i class="icon-append fa fa-envelope-o"></i>
+                                                <input type="email" maxlength="256" name="CorreoNotificacion_1" value="@Model.CorreoNotificacion_1" placeholder="E-mail">
+                                                @Html.ValidationMessageFor(model => model.CorreoNotificacion_1, "", new { @class = "text-danger" })
                                             </label>
                                         </section>
                                     </div>

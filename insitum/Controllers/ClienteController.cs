@@ -90,13 +90,13 @@ namespace insitum.Controllers
                 applicationUser.UserName = applicationUser.Email;
                 applicationUser.Estado = UsuarioEstado.Activo;
                 applicationUser.EmailConfirmed = false;
-                var contrasenaTmp = GenerarCodigo.Generar(CuotasCodigos.CuotaInferiorCodigo, CuotasCodigos.CuotaSuperiorCodigo);
-                userManager.Create(applicationUser, Convert.ToString(contrasenaTmp));
+                //var contrasenaTmp = GenerarCodigo.Generar(CuotasCodigos.CuotaInferiorCodigo, CuotasCodigos.CuotaSuperiorCodigo);
+                userManager.Create(applicationUser, Convert.ToString(applicationUser.Identificacion));
                 userManager.AddToRole(applicationUser.Id, RolUsuario.Cliente);
 
                 string htmlData = InfoMail.CreacionCuentaCliente();
                 //Send email  
-                EnviarCorreo.Enviar(applicationUser.Email, Mensaje.CreacionCuentaCliente, "<b> " + Mensaje.ContrasenaTemporal + Convert.ToString(contrasenaTmp) + "</b><br/><br/><br/>" + htmlData);
+                EnviarCorreo.Enviar(applicationUser.Email, Mensaje.CreacionCuentaCliente, "<b> " + Mensaje.ContrasenaTemporal  + "</b><br/><br/><br/>" + htmlData);
 
             return RedirectToAction("DetalleProceso", "Proceso",new  {id=applicationUser.Id });
             }

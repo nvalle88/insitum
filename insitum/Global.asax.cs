@@ -55,6 +55,10 @@ namespace insitum
             UsuarioEstado.Activo = Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["AdministradorActivo"]);
             UsuarioEstado.Inactivo = Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["AdministradorInactivo"]);
 
+            EstadoAcciones.EnProceso = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["AccionProceso"]);
+            EstadoAcciones.Finalizada = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["AccionFinalizada"]);
+
+
             RolUsuario.Administrador = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["RolAdministrador"]);
             RolUsuario.Trabajador = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["RolUsuario"]);
             RolUsuario.Cliente = Convert.ToString(System.Configuration.ConfigurationManager.AppSettings["RolCliente"]);

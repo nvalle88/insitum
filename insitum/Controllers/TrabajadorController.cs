@@ -168,13 +168,13 @@ namespace insitum.Controllers
                 applicationUser.UserName = applicationUser.Email;
                 applicationUser.Estado = UsuarioEstado.Activo;
                 applicationUser.EmailConfirmed = false;
-                var contrasenaTmp= GenerarCodigo.Generar(CuotasCodigos.CuotaInferiorCodigo, CuotasCodigos.CuotaSuperiorCodigo);
-                userManager.Create(applicationUser,Convert.ToString(contrasenaTmp));
+               // var contrasenaTmp= GenerarCodigo.Generar(CuotasCodigos.CuotaInferiorCodigo, CuotasCodigos.CuotaSuperiorCodigo);
+                userManager.Create(applicationUser,applicationUser.Identificacion);
                 userManager.AddToRole(applicationUser.Id, RolUsuario.Trabajador);
 
                 string htmlData = InfoMail.CreacionCuentaTrabajador();
                 //Send email  
-                EnviarCorreo.Enviar(applicationUser.Email,Mensaje.CreacionCuentaTrabajador, "<b> " + Mensaje.ContrasenaTemporal + Convert.ToString(contrasenaTmp) + "</b><br/><br/><br/>" + htmlData);
+                EnviarCorreo.Enviar(applicationUser.Email,Mensaje.CreacionCuentaTrabajador, "<b> " + Mensaje.ContrasenaTemporal + "</b><br/><br/><br/>" + htmlData);
                 db.Dispose();
                 
             }
