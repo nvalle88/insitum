@@ -1371,6 +1371,7 @@
     <Content Include="Views\Proceso\EditarAccion.cshtml" />
     <Content Include="Views\Proceso\EditarProceso.cshtml" />
     <Content Include="Views\Proceso\FinalizarAccion.cshtml" />
+    <Content Include="Views\Cliente\EditarCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,6 +4,7 @@ using insitum.Utiles;
 using insitum.Utiles.Template;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -17,6 +18,33 @@ namespace insitum.Controllers
     [Authorize(Roles ="Trabajador")]
     public class ClienteController : Controller
     {
+
+        private ApplicationUserManager _userManager;
+
+        public ClienteController()
+        {
+        }
+
+        public ClienteController(ApplicationUserManager userManager)
+        {
+            UserManager = userManager;
+        }
+
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+
+
+
         // GET: Cliente
         public async Task<ActionResult> ListarCliente()
         {
@@ -38,6 +66,69 @@ namespace insitum.Controllers
             ApplicationUser user = new ApplicationUser();
             return View(user);
         }
+
+
+        public ActionResult EditarCliente( string id)
+        {
+            CargarCiudades();
+            var cliente = UserManager.FindById(id);
+            return View(cliente);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditarCliente(ApplicationUser applicationUser)
+        {
+            try
+            {
+                ApplicationDbContext db = new ApplicationDbContext();
+
+                var user = UserManager.FindByName(applicationUser.Email);
+                if (user!=null)
+                {
+                    if (user.Id != applicationUser.Id)
+                    {
+                        ViewBag.IdCiudad = new SelectList(db.Ciudades.OrderBy(x => x.Nombre), "IdCiudad", "Nombre", applicationUser.IdCiudad);
+                        ModelState.AddModelError("Email", Mensaje.ExisteCorreo);
+                        return View(applicationUser);
+                    }
+                }
+
+                var clienteActualizar = UserManager.FindById(applicationUser.Id);
+
+                clienteActualizar.IdCiudad = applicationUser.IdCiudad;
+                clienteActualizar.Identificacion = applicationUser.Identificacion;
+                clienteActualizar.IdentificacionConyuge = applicationUser.IdentificacionConyuge;
+                clienteActualizar.Nombres = applicationUser.Nombres;
+                clienteActualizar.NombresConyuge = applicationUser.NombresConyuge;
+                clienteActualizar.PhoneNumber = applicationUser.PhoneNumber;
+                clienteActualizar.TelefonoConyuge = applicationUser.TelefonoConyuge;
+                clienteActualizar.UserName = applicationUser.Email;
+                clienteActualizar.Apellidos = applicationUser.Apellidos;
+                clienteActualizar.ApellidosConyuge = applicationUser.ApellidosConyuge;
+                clienteActualizar.CorreoConyuge = applicationUser.CorreoConyuge;
+                clienteActualizar.Email = applicationUser.Email;
+                clienteActualizar.CorreoNotificacion_1 = applicationUser.CorreoNotificacion_1;
+                clienteActualizar.CorreoNotificacion_2 = applicationUser.CorreoNotificacion_2;
+                clienteActualizar.CorreoNotificacion_3 = applicationUser.CorreoNotificacion_3;
+                clienteActualizar.CorreoNotificacion_4 = applicationUser.CorreoNotificacion_4;
+                clienteActualizar.Direccion = applicationUser.Direccion;
+
+                await UserManager.UpdateAsync(clienteActualizar);
+                
+                //var contrasenaTmp = GenerarCodigo.Generar(CuotasCodigos.CuotaInferiorCodigo, CuotasCodigos.CuotaSuperiorCodigo);
+               
+                return RedirectToAction("ListarCliente");
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "");
+                throw;
+            }
+        }
+
+
+
 
         public async Task<ActionResult> Eliminar(string id)
         {

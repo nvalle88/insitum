@@ -155,7 +155,25 @@ namespace insitum.Controllers
                 string htmlData = InfoMail.CreacionProceso();
                 //Send email  
                 EnviarCorreo.Enviar(usuario.Email,"Se ha creado un proceso",htmlData);
-           
+
+            if (!string.IsNullOrEmpty(usuario.CorreoNotificacion_1))
+            {
+                EnviarCorreo.Enviar(usuario.CorreoNotificacion_1, "Se ha creado un proceso", htmlData);
+            }
+
+            if (!string.IsNullOrEmpty(usuario.CorreoNotificacion_2))
+            {
+                EnviarCorreo.Enviar(usuario.CorreoNotificacion_2, "Se ha creado un proceso", htmlData);
+            }
+            if (!string.IsNullOrEmpty(usuario.CorreoNotificacion_3))
+            {
+                EnviarCorreo.Enviar(usuario.CorreoNotificacion_3, "Se ha creado un proceso", htmlData);
+            }
+            if (!string.IsNullOrEmpty(usuario.CorreoNotificacion_4))
+            {
+                EnviarCorreo.Enviar(usuario.CorreoNotificacion_4, "Se ha creado un proceso", htmlData);
+            }
+
             return RedirectToAction("DetalleProceso",new {id= procesoView.Id});
         }
 
@@ -231,10 +249,28 @@ namespace insitum.Controllers
                 db.Acciones.Add(accionProceso);
                 await db.SaveChangesAsync();
                 var proceso = db.Procesos.Where(x => x.IdProceso == accionView.Proceso.IdProceso).FirstOrDefault();
-                var enviar = db.Users.Where(x => x.Id == proceso.Id).FirstOrDefault();
+                var usuario = db.Users.Where(x => x.Id == proceso.Id).FirstOrDefault();
                 string htmlData = InfoMail.CreacionAccion();
                 //Send email  
-                EnviarCorreo.Enviar(enviar.Email, "Se ha creado una acción", htmlData);
+                EnviarCorreo.Enviar(usuario.Email, "Se ha creado una acción", htmlData);
+
+                if (!string.IsNullOrEmpty(usuario.CorreoNotificacion_1))
+                {
+                    EnviarCorreo.Enviar(usuario.CorreoNotificacion_2, "Se ha creado una acción", htmlData);
+                }
+
+                if (!string.IsNullOrEmpty(usuario.CorreoNotificacion_2))
+                {
+                    EnviarCorreo.Enviar(usuario.CorreoNotificacion_2, "Se ha creado una acción", htmlData);
+                }
+                if (!string.IsNullOrEmpty(usuario.CorreoNotificacion_3))
+                {
+                    EnviarCorreo.Enviar(usuario.CorreoNotificacion_3, "Se ha creado una acción", htmlData);
+                }
+                if (!string.IsNullOrEmpty(usuario.CorreoNotificacion_4))
+                {
+                    EnviarCorreo.Enviar(usuario.CorreoNotificacion_4, "Se ha creado una acción", htmlData);
+                }
 
                 db.Dispose();
                 return RedirectToAction("DetalleAcciones", new { id = accionProceso.IdProceso });
