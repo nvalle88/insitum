@@ -97,7 +97,7 @@
                                     {
                                         <p>
                                             <a href="javascript:void(0);"><b> Tipo de acci&oacute;n:</b> @item.TipoAccion.Nombre  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Fecha l&iacute;mite:</b>  @item.FechaInicio.AddDays(Convert.ToDouble(item.TipoAccion.TiempoDias)).ToLongDateString()  </a>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Finalizar:&nbsp;</b> @Html.ActionLink(" ", "FinalizarAccion", new { id = item.IdAccion }, new { @class = "editar btn btn-default btn-md glyphicon glyphicon-ok", @style = "color:green" })
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @Html.ActionLink("Finalizar", "FinalizarAccion", new { id = item.IdAccion }, new { @class = "btn btn-default btn-md glyphicon glyphicon-ok",@type="Button", @style = "color:green" })
                                         </p>
                                         <p>
                                             @item.Detalle
@@ -109,7 +109,7 @@
                                     {
                                         <p>
                                             <a href="javascript:void(0);"><b> Tipo de acci&oacute;n:</b> @item.TipoAccion.Nombre  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Fecha de finalizaci&oacute;n:</b>  @item.FechaFin.ToLongDateString()  </a>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Finalizar:&nbsp;</b> @Html.ActionLink(" ", "FinalizarAccion", new { id = item.IdAccion }, new { @class = "editar btn btn-default btn-md glyphicon glyphicon-ok", @style = "color:green" })
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @Html.ActionLink("Finalizar", "FinalizarAccion", new { id = item.IdAccion }, new { @class = "btn btn-default btn-md glyphicon glyphicon-ok", @type = "Button", @style = "color:green" })
                                         </p>
                                         <p>
                                             @item.Detalle

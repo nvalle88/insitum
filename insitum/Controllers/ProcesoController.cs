@@ -119,6 +119,11 @@ namespace insitum.Controllers
                 ViewBag.CorreoConyuge = $"{user.CorreoConyuge}";
                 ViewBag.TelefonoConyuge = $"{user.TelefonoConyuge}";
 
+                ViewBag.CorreoNotificacion_1 = $"{user.CorreoNotificacion_1}";
+                ViewBag.CorreoNotificacion_2 = $"{user.CorreoNotificacion_2}";
+                ViewBag.CorreoNotificacion_3 = $"{user.CorreoNotificacion_3}";
+                ViewBag.CorreoNotificacion_4 = $"{user.CorreoNotificacion_4}";
+
 
                 var listaProcesos = db.Procesos.Where(x => x.Id == procesoView.Id).OrderByDescending(x => x.FechaInicio).ToList();
                 ViewBag.TotalProcesos = listaProcesos.Count();
@@ -144,7 +149,11 @@ namespace insitum.Controllers
                 ViewBag.CorreoConyuge = $"{user.CorreoConyuge}";
                 ViewBag.TelefonoConyuge = $"{user.TelefonoConyuge}";
 
-               
+                ViewBag.CorreoNotificacion_1 = $"{user.CorreoNotificacion_1}";
+                ViewBag.CorreoNotificacion_2 = $"{user.CorreoNotificacion_2}";
+                ViewBag.CorreoNotificacion_3 = $"{user.CorreoNotificacion_3}";
+                ViewBag.CorreoNotificacion_4 = $"{user.CorreoNotificacion_4}";
+
                 var listaProcesos = db.Procesos.Where(x => x.Id == procesoView.Id).OrderByDescending(x => x.FechaInicio).ToList();
                 ViewBag.TotalProcesos = listaProcesos.Count();
                 var procesoViewModel = new ProcesoViewModel { Id = procesoView.Id, ListaProcesos = listaProcesos,Detalle=procesoView.Detalle,FechaInicio=procesoView.FechaInicio };
@@ -260,7 +269,7 @@ namespace insitum.Controllers
 
                 if (!string.IsNullOrEmpty(usuario.CorreoNotificacion_1))
                 {
-                    EnviarCorreo.Enviar(usuario.CorreoNotificacion_2, "Se ha creado una acción", htmlData);
+                    EnviarCorreo.Enviar(usuario.CorreoNotificacion_1, "Se ha creado una acción", htmlData);
                 }
 
                 if (!string.IsNullOrEmpty(usuario.CorreoNotificacion_2))
