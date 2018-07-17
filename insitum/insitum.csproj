@@ -47,6 +47,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Report.Viewer.11.0.0.0\lib\net\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+    </Reference>
+    <Reference Include="ReportViewerForMvc, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReportViewerForMvc.1.1.1\lib\net45\ReportViewerForMvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -220,6 +232,7 @@
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\ClienteVistaController.cs" />
     <Compile Include="Controllers\ProcesoController.cs" />
+    <Compile Include="Controllers\ReportesController.cs" />
     <Compile Include="Controllers\TrabajadorController.cs" />
     <Compile Include="Controllers\AppViewsController.cs" />
     <Compile Include="Controllers\CommerceController.cs" />
@@ -296,6 +309,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Utiles\Constantes.cs" />
     <Compile Include="Utiles\CorreoUtil.cs" />
+    <Compile Include="Utiles\Credenciales.cs" />
     <Compile Include="Utiles\CuotasCodigos.cs" />
     <Compile Include="Utiles\EnviarCorreo.cs" />
     <Compile Include="Utiles\EstadoAcciones.cs" />
@@ -655,6 +669,7 @@
     <Content Include="Imagenes\pushpin vendedor-01.png" />
     <Content Include="Imagenes\star_outline.png" />
     <Content Include="Imagenes\star_selected.png" />
+    <Content Include="ReportViewerWebForm.aspx" />
     <Content Include="Scripts\app.config.js" />
     <Content Include="Scripts\app.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1324,8 +1339,7 @@
     <Content Include="Views\Misc\Search.cshtml" />
     <Content Include="Views\Misc\Versions.cshtml" />
     <Content Include="Views\Reportes\ReporteClientes.cshtml" />
-    <Content Include="Views\Reportes\ReporteCompromisos.cshtml" />
-    <Content Include="Views\Reportes\ReporteVendedores.cshtml" />
+    <Content Include="Views\Reportes\ReporteGestion.cshtml" />
     <Content Include="Views\Shared\_Aside.cshtml" />
     <Content Include="Views\Shared\_CurrentUser.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />

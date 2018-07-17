@@ -23,6 +23,15 @@ namespace insitum
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            Constantes.ServerReportUrl = System.Configuration.ConfigurationManager.AppSettings["ServerReportUrl"];
+            Constantes.UsuarioReport = System.Configuration.ConfigurationManager.AppSettings["UsuarioReport"];
+            Constantes.ContrasenaReporte = System.Configuration.ConfigurationManager.AppSettings["ContrasenaReporte"];
+
+            Constantes.ReporteClientesPath = System.Configuration.ConfigurationManager.AppSettings["ReporteClientesPath"];
+            Constantes.ReporteGestionPath = System.Configuration.ConfigurationManager.AppSettings["ReporteGestionPath"];
+
+           
+
 
             CorreoUtil.SmtpServer = System.Configuration.ConfigurationManager.AppSettings["SmtpServer"];
             CorreoUtil.Port = System.Configuration.ConfigurationManager.AppSettings["SmtpPort"];

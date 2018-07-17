@@ -59,28 +59,46 @@
                                             </ul>
                                             <br>
                                             <ul class="list-unstyled">
-                                                <legend>Conyugue</legend>
-                                                <li>
-                                                    <h1>
-                                                        <span class="semi-bold">@ViewBag.NombreApellidoConyugue</span>
-                                                        <br>
-                                                        <small>@ViewBag.IdentificacionConyuge</small>
-                                                    </h1>
-                                                </li>
-                                                <li>
-                                                    <p class="text-muted">
-                                                        <i class="fa fa-phone"></i><span class="txt-color-darken">&nbsp; @ViewBag.TelefonoConyuge</span>
-                                                    </p>
-                                                </li>
-                                                <li>
-                                                    <p class="text-muted">
-                                                        <i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="javascript:void(0);">@ViewBag.CorreoConyuge</a>
-                                                    </p>
-                                                </li>
-                                                <li>
-                                                    <br /> <p><header></header></p>
-                                                </li>
-                                            </ul>
+                                                @if ((@ViewBag.NombreApellidoConyugue) != "  " || !string.IsNullOrEmpty(@ViewBag.IdentificacionConyuge) || !string.IsNullOrEmpty(@ViewBag.TelefonoConyuge) || !string.IsNullOrEmpty(@ViewBag.CorreoConyuge))
+                                                {
+                                                    <legend>Conyugue</legend>
+                                                }
+                                                @if (@ViewBag.NombreApellidoConyugue != "  " || !string.IsNullOrEmpty(@ViewBag.IdentificacionConyuge))
+                                                {
+                                                    <li>
+                                                        <h1>
+                                                            @if (@ViewBag.NombreApellidoConyugue != "  ")
+                                                            {
+                                                                <span class="semi-bold">@ViewBag.NombreApellidoConyugue</span>
+                                                                <br>
+                                                            }
+                                                            @if (!string.IsNullOrEmpty(@ViewBag.IdentificacionConyuge))
+                                                            {
+                                                                <small>@ViewBag.IdentificacionConyuge</small>
+                                                            }
+                                                        </h1>
+                                                    </li>
+                                                }
+                                                @if (!string.IsNullOrEmpty(@ViewBag.TelefonoConyuge))
+                                                {
+                                                    <li>
+                                                        <p class="text-muted">
+                                                            <i class="fa fa-phone"></i><span class="txt-color-darken">&nbsp; @ViewBag.TelefonoConyuge</span>
+                                                        </p>
+                                                    </li>
+                                                }
+                                                @if (!string.IsNullOrEmpty(@ViewBag.CorreoConyuge))
+                                                {
+                                                    <li>
+                                                        <p class="text-muted">
+                                                            <i class="fa fa-envelope"></i>&nbsp;&nbsp;<a href="javascript:void(0);">@ViewBag.CorreoConyuge</a>
+                                                        </p>
+                                                    </li>
+                                                }
+                                                    <li>
+                                                        <br /> <p><header></header></p>
+                                                    </li>
+                                                </ul>
                                         </div>
                                     </div>
                                 </div>

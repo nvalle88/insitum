@@ -34,12 +34,24 @@
                         </ul>
                     </li>
                 </ul>
+
                 <ul>
                     <li class=" @Html.RouteIf("Cliente", "active")">
                         <a href="#" title="Listar trabajadores"><i class="fa fa-lg fa-fw fa-user"></i> <span class="menu-item-parent">Clientes</span></a>
                         <ul>
                             <li class="@Html.RouteIf("Cliente", "active")">
                                 <a href="@Url.Action("ListarCliente", "Cliente")" title="Buscar cliente"><i class="fa fa-lg fa-fw fa-search"></i> <span class="menu-item-parent">Listar</span></a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <ul>
+                    <li class=" @Html.RouteIf("Reportes", "active")">
+                        <a href="#" title="Reporte de gestión"><i class="fa fa-lg fa-fw fa-files-o"></i> <span class="menu-item-parent">Reportes</span></a>
+                        <ul>
+                            <li class="@Html.RouteIf("Reportes", "active")">
+                                <a href="@Url.Action("ReporteGestion", "Reportes")" title="Buscar cliente"><i class="fa fa-lg fa-fw fa-file"></i> <span class="menu-item-parent">Gesti&oacute;n</span></a>
                             </li>
                         </ul>
                     </li>
