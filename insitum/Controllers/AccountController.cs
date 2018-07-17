@@ -78,8 +78,10 @@ namespace insitum.Controllers
                 await UserManager.UpdateAsync(usuario);
 
                 string htmlData = InfoMail.RecuperarContrasena();
+                htmlData = htmlData.Replace("@NombreUsuario", usuario.UserName);
+                htmlData = htmlData.Replace("@Contrasena", usuario.Identificacion);
                 //Send email  
-                EnviarCorreo.Enviar(usuario.Email, Mensaje.RecuperarContrasena, "<b> " + Mensaje.ContrasenaTemporal+ "</b><br/><br/><br/>" + htmlData);
+                EnviarCorreo.Enviar(usuario.Email, Mensaje.RecuperarContrasena, htmlData);
 
                 return View("RecuperarContrasenaInformacion");
             }

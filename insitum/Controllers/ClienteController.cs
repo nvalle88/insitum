@@ -138,20 +138,11 @@ namespace insitum.Controllers
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
                 var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
                 var user = userManager.FindById(id);
-                user.Estado = UsuarioEstado.Inactivo;
-                var rol = user.Roles.FirstOrDefault();
-                var idUsuario = user.Id;
-                var rolName = await roleManager.FindByIdAsync(rol.RoleId);
                 await userManager.DeleteAsync(user);
-                await userManager.RemoveFromRoleAsync(idUsuario, rolName.Name);
-
-                string htmlData = InfoMail.CuentaEliminada();
-                //Send email  
-                EnviarCorreo.Enviar(user.Email, Mensaje.CuentaEliminada, htmlData);
                 db.Dispose();
 
             }
-            catch (Exception )
+            catch (Exception)
             {
                 return View("NoEsPosibleEliminar");
             }
@@ -186,12 +177,16 @@ namespace insitum.Controllers
                 userManager.AddToRole(applicationUser.Id, RolUsuario.Cliente);
 
                 string htmlData = InfoMail.CreacionCuentaCliente();
+                htmlData = htmlData.Replace("@Identificacion",applicationUser.Identificacion);
+                htmlData = htmlData.Replace("@NombresApellidos", applicationUser.Nombres +" "+applicationUser.Apellidos);
+                htmlData = htmlData.Replace("@NombreUsuario", applicationUser.UserName);
+                htmlData = htmlData.Replace("@Contrasena", applicationUser.Identificacion);
                 //Send email  
-                EnviarCorreo.Enviar(applicationUser.Email, Mensaje.CreacionCuentaCliente, "<b> " + Mensaje.ContrasenaTemporal  + "</b><br/><br/><br/>" + htmlData);
+                EnviarCorreo.Enviar(applicationUser.Email, Mensaje.CreacionCuentaCliente,htmlData );
 
             return RedirectToAction("DetalleProceso", "Proceso",new  {id=applicationUser.Id });
             }
-            catch (Exception )
+            catch (Exception ex )
             {
                 ModelState.AddModelError("","");
                 throw;

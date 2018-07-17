@@ -166,8 +166,12 @@ namespace insitum.Controllers
 
                 var usuario = db.Users.Where(x => x.Id == procesoView.Id).FirstOrDefault();
                 string htmlData = InfoMail.CreacionProceso();
-                //Send email  
-                EnviarCorreo.Enviar(usuario.Email,"Se ha creado un proceso",htmlData);
+
+            htmlData = htmlData.Replace("@FechaCracion", procesoView.FechaInicio.ToLongDateString());
+            htmlData = htmlData.Replace("@NIP",procesoView.NIP);
+            htmlData = htmlData.Replace("@Detalle", procesoView.Detalle);
+            //Send email  
+            EnviarCorreo.Enviar(usuario.Email,"Se ha creado un proceso",htmlData);
 
             if (!string.IsNullOrEmpty(usuario.CorreoNotificacion_1))
             {
@@ -264,6 +268,12 @@ namespace insitum.Controllers
                 var proceso = db.Procesos.Where(x => x.IdProceso == accionView.Proceso.IdProceso).FirstOrDefault();
                 var usuario = db.Users.Where(x => x.Id == proceso.Id).FirstOrDefault();
                 string htmlData = InfoMail.CreacionAccion();
+
+                var tipoActividad = db.TipoAcciones.Where(x => x.IdTipoAccion == accionView.IdTipoAccion).FirstOrDefault();
+                htmlData = htmlData.Replace("@FechaCracion", accionView.FechaInicio.ToLongDateString());
+                htmlData = htmlData.Replace("@NIP", proceso.NIP);
+                htmlData = htmlData.Replace("@TipoActividad", tipoActividad.Nombre);
+                htmlData = htmlData.Replace("@Detalle", accionView.Detalle);
                 //Send email  
                 EnviarCorreo.Enviar(usuario.Email, "Se ha creado una acción", htmlData);
 
@@ -288,7 +298,7 @@ namespace insitum.Controllers
                 db.Dispose();
                 return RedirectToAction("DetalleAcciones", new { id = accionProceso.IdProceso });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;
