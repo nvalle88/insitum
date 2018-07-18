@@ -13,6 +13,6 @@ namespace insitum.Utiles
         public static string UserName { get; set; }
         public static string Password { get; set; }
         public static bool SmtpUseDefaultCredentials { get; set; }
-        
+        public static string EmailNotificationActivity { get;  set; }
     }
 }

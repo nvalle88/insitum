@@ -1,20 +1,30 @@
-﻿using insitum.Models;
+﻿using insitum.Controllers;
+using insitum.Models;
 using insitum.Utiles;
+using insitum.Utiles.Template;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Timers;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Diagnostics;
+using ScheduledTaskExample.ScheduledTasks;
 
 namespace insitum
 {
+
     public class MvcApplication : System.Web.HttpApplication
     {
+        private static double TimerIntervalInMilliseconds = Convert.ToDouble(System.Configuration.ConfigurationManager.AppSettings["TimerIntervalInMilliseconds"]);
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -23,15 +33,22 @@ namespace insitum
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            Constantes.TiempoCicloMinutosNotificacionEmail = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["TiempoCicloMinutosNotificacionEmail"]);
+            Constantes.HoraInicioCiclo = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["HoraInicioCiclo"]);
+            Constantes.MinutoInicioCiclo = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["MinutoInicioCiclo"]);
+
+
+            
             Constantes.ServerReportUrl = System.Configuration.ConfigurationManager.AppSettings["ServerReportUrl"];
             Constantes.UsuarioReport = System.Configuration.ConfigurationManager.AppSettings["UsuarioReport"];
             Constantes.ContrasenaReporte = System.Configuration.ConfigurationManager.AppSettings["ContrasenaReporte"];
 
             Constantes.ReporteClientesPath = System.Configuration.ConfigurationManager.AppSettings["ReporteClientesPath"];
             Constantes.ReporteGestionPath = System.Configuration.ConfigurationManager.AppSettings["ReporteGestionPath"];
+            Constantes.DireccionFisicahtmlCorreoTimer = System.Configuration.ConfigurationManager.AppSettings["DireccionFisicahtmlCorreoTimer"];
+            Constantes.DiasNotificacion =Convert.ToInt32( System.Configuration.ConfigurationManager.AppSettings["DiasNotificacion"]);
 
            
-
 
             CorreoUtil.SmtpServer = System.Configuration.ConfigurationManager.AppSettings["SmtpServer"];
             CorreoUtil.Port = System.Configuration.ConfigurationManager.AppSettings["SmtpPort"];
@@ -59,6 +76,7 @@ namespace insitum
             CorreoUtil.SmtpUseDefaultCredentials = SmtpUseDefaultCredentials;
             CorreoUtil.UserName = System.Configuration.ConfigurationManager.AppSettings["Usuario"];
             CorreoUtil.Password = System.Configuration.ConfigurationManager.AppSettings["Contrasena"];
+            CorreoUtil.EmailNotificationActivity = System.Configuration.ConfigurationManager.AppSettings["EmailNotificationActivity"];
 
 
             UsuarioEstado.Activo = Convert.ToBoolean(System.Configuration.ConfigurationManager.AppSettings["AdministradorActivo"]);
@@ -91,12 +109,34 @@ namespace insitum
             CuotasCodigos.CuotaInferiorCodigo = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["CuotaInferiorCodigo"]);
             CuotasCodigos.CuotaSuperiorCodigo = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["CuotaSuperiorCodigo"]);
 
+
+            JobScheduler.Start();
+
+
             ApplicationDbContext db = new ApplicationDbContext();
             CreateRoles(db);
-           
 
-           
+
+            ////Timer timer = new Timer(TimerIntervalInMilliseconds);
+            //timer.Enabled = true;
+            //timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
+            //timer.Start();
+
+
         }
+
+        static void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            DateTime MyScheduledRunTime = DateTime.Parse(System.Configuration.ConfigurationManager.AppSettings["TimerStartTime"]);
+            DateTime CurrentSystemTime = DateTime.Now;
+            DateTime LatestRunTime = MyScheduledRunTime.AddMilliseconds(TimerIntervalInMilliseconds);
+            if ((CurrentSystemTime.CompareTo(MyScheduledRunTime) >= 0) && (CurrentSystemTime.CompareTo(LatestRunTime) <= 0))
+            {
+
+                // RUN YOUR PROCESSES HERE
+            }
+        }
+
 
 
         private void CreateRoles(ApplicationDbContext db)

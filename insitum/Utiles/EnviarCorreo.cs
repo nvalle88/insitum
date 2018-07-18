@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Helpers;
 
@@ -10,6 +11,7 @@ namespace insitum.Utiles
     {
         public static void Enviar(string Email, string Subject, string Body)
         {
+            
             WebMail.SmtpServer = CorreoUtil.SmtpServer;
             WebMail.SmtpPort = Convert.ToInt32(CorreoUtil.Port);
             WebMail.SmtpUseDefaultCredentials = CorreoUtil.SmtpUseDefaultCredentials;

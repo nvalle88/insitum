@@ -15,6 +15,11 @@ namespace insitum.Utiles
             public static string ServerReportUrl { get; set; }
             public static string ReporteGestionPath { get; set; }
             public static string ReporteClientesPath { get; set; }
-        }
+            public static string DireccionFisicahtmlCorreoTimer { get; set; }
+            public static int DiasNotificacion { get; set; }
+            public static int TiempoCicloMinutosNotificacionEmail { get; set; }
+            public static int HoraInicioCiclo { get; set; }
+            public static int MinutoInicioCiclo { get; set; }
+    }
 
 }
