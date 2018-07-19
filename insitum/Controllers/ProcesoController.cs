@@ -227,8 +227,8 @@ namespace insitum.Controllers
         public ActionResult EditarAccion(int id)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            ViewBag.IdTipoAccion = new SelectList(db.TipoAcciones.OrderBy(x => x.Nombre), "IdTipoAccion", "Nombre");
-            var accion= db.Acciones.Where(x=>x.IdAccion==id).FirstOrDefault();
+            var accion = db.Acciones.Where(x => x.IdAccion == id).FirstOrDefault();
+            ViewBag.IdTipoAccion = new SelectList(db.TipoAcciones.OrderBy(x => x.Nombre), "IdTipoAccion", "Nombre",accion.IdTipoAccion);
             return View(accion);
         }
 
