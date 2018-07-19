@@ -56,6 +56,54 @@ namespace insitum.Controllers
             }
         }
 
+        [Authorize(Roles = "Trabajador")]
+        public async Task<ActionResult> ReporteClientesTrabajador(string id)
+        {
+            try
+            {
+                ApplicationDbContext db = new ApplicationDbContext();
+              
+                var proceso = db.Procesos.Where(x => x.NIP == id).FirstOrDefault();
+               
+                var cliente = await UserManager.FindByIdAsync(proceso.Id);
+                var parameters = new List<ReportParameter>();
+                //Add parameter
+                parameters.Add(new ReportParameter("NIP", id.ToString(), false));
+                parameters.Add(new ReportParameter("Identificacion", cliente.Identificacion.ToString(), false));
+
+                ReportViewer rptViewer = new ReportViewer();
+
+                // ProcessingMode will be Either Remote or Local  
+                rptViewer.ProcessingMode = ProcessingMode.Remote;
+                rptViewer.SizeToReportContent = true;
+                rptViewer.ZoomMode = ZoomMode.PageWidth;
+                rptViewer.Width = Unit.Percentage(100);
+                rptViewer.Height = Unit.Percentage(100);
+                rptViewer.AsyncRendering = true;
+                rptViewer.Visible = true;
+
+                IReportServerCredentials irsc = new CustomReportCredentials(Constantes.UsuarioReport, Constantes.ContrasenaReporte);
+
+                rptViewer.ServerReport.ReportServerCredentials = irsc;
+
+                rptViewer.ServerReport.ReportServerUrl = new Uri(Constantes.ServerReportUrl);
+
+                rptViewer.ServerReport.ReportPath = Constantes.ReporteClientesPath;
+
+                rptViewer.ServerReport.SetParameters(parameters);
+
+                rptViewer.ServerReport.Refresh();
+
+                ViewBag.ReportViewer = rptViewer;
+                return View();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         // GET: Reportes
         [Authorize(Roles = "Cliente")]
         public async Task<ActionResult> ReporteClientes(string id)

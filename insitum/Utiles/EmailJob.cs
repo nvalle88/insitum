@@ -22,8 +22,7 @@ namespace insitum.Utiles
             var listaacciones = db.Acciones.Where(x => x.Estado == EstadoAcciones.EnProceso).ToList();
             if (listaacciones.Count > 0)
             {
-                string path = Constantes.DireccionFisicahtmlCorreoTimer;
-                string htmlData = File.ReadAllText(path);
+                
 
 
                 var fechaActual = DateTime.Now;
@@ -36,7 +35,8 @@ namespace insitum.Utiles
                     var diasDiferencia = FechaReal.Days;
                     if (diasDiferencia <= Constantes.DiasNotificacion)
                     {
-
+                        string path = Constantes.DireccionFisicahtmlCorreoTimer;
+                        string htmlData = File.ReadAllText(path);
 
                         htmlData = htmlData.Replace("@Identificacion", item.Proceso.ApplicationUser.Identificacion);
                         htmlData = htmlData.Replace("@NombresApellidos", item.Proceso.ApplicationUser.Nombres + "  " + item.Proceso.ApplicationUser.Apellidos);
