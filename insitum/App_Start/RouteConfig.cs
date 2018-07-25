@@ -17,7 +17,7 @@ namespace insitum
             routes.MapRoute("Default", "{controller}/{action}/{id}", new
             {
                 controller = "Account",
-                action = "Login",
+                action = "Inicio",
                 id = UrlParameter.Optional
             }).RouteHandler = new DashRouteHandler();
         }

@@ -20,6 +20,7 @@ namespace insitum.Utiles
             public static int TiempoCicloMinutosNotificacionEmail { get; set; }
             public static int HoraInicioCiclo { get; set; }
             public static int MinutoInicioCiclo { get; set; }
+            public static string PaginadeInicio { get; set; }
     }
 
 }

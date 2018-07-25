@@ -27,6 +27,14 @@ namespace insitum.Controllers
         {
         }
 
+
+        [AllowAnonymous]
+        public ActionResult Inicio()
+        {
+            return Redirect(Constantes.PaginadeInicio);
+        }
+
+
         public AccountController(ApplicationDbContext a, ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;

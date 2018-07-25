@@ -44,6 +44,7 @@ namespace insitum
             Constantes.ContrasenaReporte = System.Configuration.ConfigurationManager.AppSettings["ContrasenaReporte"];
 
             Constantes.ReporteClientesPath = System.Configuration.ConfigurationManager.AppSettings["ReporteClientesPath"];
+            Constantes.PaginadeInicio = System.Configuration.ConfigurationManager.AppSettings["PaginadeInicio"];
             Constantes.ReporteGestionPath = System.Configuration.ConfigurationManager.AppSettings["ReporteGestionPath"];
             Constantes.DireccionFisicahtmlCorreoTimer = System.Configuration.ConfigurationManager.AppSettings["DireccionFisicahtmlCorreoTimer"];
             Constantes.DiasNotificacion =Convert.ToInt32( System.Configuration.ConfigurationManager.AppSettings["DiasNotificacion"]);
